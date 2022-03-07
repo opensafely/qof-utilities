@@ -13,26 +13,44 @@ import pathlib
 
 class Indicator:
     def __init__(
-        self, indicator_table, denominator_table=None, numerator_table=None
+        self,
+        indicator_table,
+        denominator_table=None,
+        numerator_table=None,
+        extra_trim=True,
     ):
         self.indicator_id = indicator_table[0][1]
         self.description = indicator_table[1][1]
-        self.numerator = self._parse_indicator(numerator_table)
-        self.denominator = self._parse_indicator(denominator_table)
+        self.numerator = self._parse_indicator(numerator_table, extra_trim)
+        self.denominator = self._parse_indicator(denominator_table, extra_trim)
         self.rule_count = len(self.denominator.index) + len(
             self.numerator.index
         )
         self.line_count = self._line_count()
 
-    def _parse_indicator(self, table):
+    def __str__(self):
+        return self.indicator_id
+
+    def __repr__(self):
+        return (
+            "Indicator(indicator_id={}, rule_count={}, line_count={})".format(
+                self.indicator_id, self.rule_count, self.line_count
+            )
+        )
+
+    def _parse_indicator(self, table, extra_trim=True):
         """
         Set the second row as the column headers
         Remove the first two rows and the last row
+        Register header is one row higher
         """
+        trim = 0
+        if extra_trim:
+            trim += 1
         if table is not None:
             new_table = table.copy()
-            new_table.rename(columns=new_table.iloc[1], inplace=True)
-            new_table = new_table[2:].reset_index(drop=True)
+            new_table.rename(columns=new_table.iloc[0 + trim], inplace=True)
+            new_table = new_table[1 + trim:].reset_index(drop=True)
             new_table = new_table[:-1]
             return new_table
         else:
@@ -40,17 +58,16 @@ class Indicator:
 
     # TODO: Check this is working as expected
     def _line_count(self):
-        """ """
+        total = 0
         if not self.numerator.empty:
-            num_total = sum(
+            total += sum(
                 len(re.split("OR|AND", x)) for x in self.numerator["Rule"]
             )
-            denom_total = sum(
+        if not self.denominator.empty:
+            total += sum(
                 len(re.split("OR|AND", x)) for x in self.denominator["Rule"]
             )
-            return num_total + denom_total
-        else:
-            return 0
+        return total
 
 
 # Redefine text property to include hyperlinks
@@ -125,65 +142,99 @@ def build_table_dictionary(doc):
                         df[i][j] = cell.text.strip()
             table_lookup[last_text].append(pd.DataFrame(df))
         else:
-            if re.match("(\d+)", block.text.strip()):
+            if "Heading" in block.style.name:
                 last_text = block.text.strip()
     return table_lookup
 
 
+# TODO: not currently parsing "Cohorts" (Vaccination)
+def get_register(table_lookup):
+    """
+    Older clinical areas had the register as a separate indicator
+    But the actual rules are always defined in section 3
+    To capture the register rules in complexity analysis always analyse
+    """
+    dataset_tables = table_lookup["Case registers"]
+    for i in range(len(dataset_tables)):
+        if "_REG" in dataset_tables[i][0][1]:
+            return Indicator(
+                dataset_tables[i], dataset_tables[i + 1], extra_trim=False
+            )
+
+
 def get_indicators(table_lookup):
     """
-    Parse indicators tables ("Outputs"), creating a list of Indicator objects
+    Parse indicator tables "Indicator(s)", creating a dict of Indicator objects
     Grab tables in groups of three (indicator, numerator, denominator)
-    If there is no second table, just create Indicator object
     If there is no third table, numerator and denominator may be combined
     """
-    indicators = table_lookup["4. Outputs"]
-    indicator_list = []
-    for i in range(len(indicators)):
-        if indicators[i][0][0] == "Indicator ID":
-            try:
-                second_indicator = indicators[i + 1]
-            except IndexError:
-                indicator_list.append(Indicator(indicators[i]))
-                return indicator_list
-            if second_indicator[0][0] == "Indicator ID":
-                indicator_list.append(Indicator(indicators[i]))
-            else:
-                # Grab the next two denominator and numerator tables
-                try:
-                    third_indicator = indicators[i + 2]
-                except IndexError:
-                    # If there is no third indicator, then numerator and
-                    # denominator may be combined
-                    split = second_indicator[
-                        second_indicator[0] == "End of denominator rules"
-                    ].index[0]
-                    if split:
-                        third_indicator = second_indicator[split + 1:]
-                        # TODO: find way to drop null rows
-                        third_indicator = third_indicator[2:]
-                        third_indicator.reset_index(drop=True)
-                        second_indicator = second_indicator[:split]
-                indicator_list.append(
-                    Indicator(indicators[i], second_indicator, third_indicator)
-                )
-                # Skip two iterations for the numerator and denominator
-                i = i + 2
-    return indicator_list
+    indicators = table_lookup["Indicator(s)"]
+    indicator_dict = {}
+    ind_iter = iter(range(len(indicators)))
+    for i in ind_iter:
+        first_indicator = indicators[i]
+        if "maintains a register" in first_indicator[1][1]:
+            # Skip a register indicator, handled elsewhere
+            continue
+        try:
+            second_indicator = indicators[i + 1]
+        except IndexError:
+            continue
+        # Grab the next two denominator and numerator tables
+        try:
+            third_indicator = indicators[i + 2]
+            # Skip two iterations for the numerator and denominator
+            next(ind_iter)
+            next(ind_iter)
+        except IndexError:
+            # If there is no third indicator, then numerator and
+            # denominator may be combined
+            split = second_indicator[
+                second_indicator[0] == "End of denominator rules"
+            ].index[0]
+            if split:
+                third_indicator = second_indicator[split + 1:]
+                # TODO: find way to drop null rows
+                third_indicator = third_indicator[2:]
+                third_indicator.reset_index(drop=True)
+                second_indicator = second_indicator[:split]
+                # Skip one iteration for the combined table
+                next(ind_iter)
+        indicator_obj = Indicator(
+            indicators[i], second_indicator, third_indicator
+        )
+        indicator_dict[indicator_obj.indicator_id] = indicator_obj
+    return indicator_dict
 
 
-def run(docs_dir):
+def extract_one(doc_path):
+    """
+    Output csv for each indicator
+    """
+    doc = docx.Document(doc_path)
+    table_lookup = build_table_dictionary(doc)
+    indicators = get_indicators(table_lookup)
+    import code
+
+    code.interact(local=locals())
+    return indicators
+
+
+def summary_stats(docs_dir):
     counts = []
     for f in docs_dir.rglob("*.docx"):
         doc = docx.Document(f)
         table_lookup = build_table_dictionary(doc)
+        register = get_register(table_lookup)
         indicators = get_indicators(table_lookup)
+        if register:
+            indicators[register.indicator_id] = register
         counts.append(
             [
                 f.name,
                 len(indicators),
-                sum(x.rule_count for x in indicators),
-                sum(y.line_count for y in indicators),
+                sum(x.rule_count for x in indicators.values()),
+                sum(y.line_count for y in indicators.values()),
             ]
         )
     df = (
@@ -207,8 +258,13 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Parse QOF documents")
     parser.add_argument(
-        "docs_path", type=pathlib.Path, help="Path to QOF docs directory"
+        "doc_path",
+        type=pathlib.Path,
+        help="Path to QOF docs directory or single doc file",
     )
 
     args = parser.parse_args()
-    run(args.docs_path)
+    if args.doc_path.is_dir():
+        summary_stats(args.doc_path)
+    else:
+        extract_one(args.doc_path)
