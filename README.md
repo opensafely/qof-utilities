@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The goal of this repo is to help a research go from the Opensafely research template to Quality and Outcomes Framework ([QOF](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof)) results.
+The goal of this repository is to help a research build on the OpenSAFELY [research-template](https://github.com/opensafely/research-template) to investigate montly changes in Quality and Outcomes Framework ([QOF](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof)) indicators.
 
 # QOF Rule Complexity
 
