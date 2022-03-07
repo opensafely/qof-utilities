@@ -1,3 +1,4 @@
+import argparse
 import docx
 from docx.document import Document
 from docx.oxml.table import CT_Tbl
@@ -102,12 +103,15 @@ def get_paragraph_text(paragraph):
 
 
 # https://github.com/python-openxml/python-docx/issues/757
-# TODO: Extra parsing to eliminate Numerator/Denominator rows?
 # TODO: Current issue python-docx parsing cell with form field (i.e. drop-down)
 # The library skips the cell rather than leaving an empty string
-# It works fine if there is additional text in the cell
+# Fine if there is additional text in the cell; an issue if JUST the drop-down
 # Current solution is to manually remove content control from each word doc
 def build_table_dictionary(doc):
+    """
+    Create a dictionary of document tables by table header text
+    Save any text that starts with an interger as a potential table header
+    """
     table_lookup = defaultdict(list)
     for block in iter_block_items(doc):
         if isinstance(block, Table):
@@ -127,44 +131,84 @@ def build_table_dictionary(doc):
 
 
 def get_indicators(table_lookup):
+    """
+    Parse indicators tables ("Outputs"), creating a list of Indicator objects
+    Grab tables in groups of three (indicator, numerator, denominator)
+    If there is no second table, just create Indicator object
+    If there is no third table, numerator and denominator may be combined
+    """
     indicators = table_lookup["4. Outputs"]
     indicator_list = []
     for i in range(len(indicators)):
         if indicators[i][0][0] == "Indicator ID":
-            if indicators[i + 1][0][0] == "Indicator ID":
+            try:
+                second_indicator = indicators[i + 1]
+            except IndexError:
+                indicator_list.append(Indicator(indicators[i]))
+                return indicator_list
+            if second_indicator[0][0] == "Indicator ID":
                 indicator_list.append(Indicator(indicators[i]))
             else:
                 # Grab the next two denominator and numerator tables
+                try:
+                    third_indicator = indicators[i + 2]
+                except IndexError:
+                    # If there is no third indicator, then numerator and
+                    # denominator may be combined
+                    split = second_indicator[
+                        second_indicator[0] == "End of denominator rules"
+                    ].index[0]
+                    if split:
+                        third_indicator = second_indicator[split + 1:]
+                        # TODO: find way to drop null rows
+                        third_indicator = third_indicator[2:]
+                        third_indicator.reset_index(drop=True)
+                        second_indicator = second_indicator[:split]
                 indicator_list.append(
-                    Indicator(
-                        indicators[i], indicators[i + 1], indicators[i + 2]
-                    )
+                    Indicator(indicators[i], second_indicator, third_indicator)
                 )
                 # Skip two iterations for the numerator and denominator
                 i = i + 2
     return indicator_list
 
 
-def run_one(docx_path, json_path):
-    doc = docx.Document(docx_path)
-    table_lookup = build_table_dictionary(doc)
-    indicators = get_indicators(table_lookup)
-
-
-def run():
-    for f in pathlib.Path("converted").rglob("*.docx"):
+def run(docs_dir):
+    counts = []
+    for f in docs_dir.rglob("*.docx"):
         doc = docx.Document(f)
         table_lookup = build_table_dictionary(doc)
         indicators = get_indicators(table_lookup)
-        print(
-            f,
-            len(indicators),
-            sum(x.rule_count for x in indicators),
-            sum(y.line_count for y in indicators),
+        counts.append(
+            [
+                f.name,
+                len(indicators),
+                sum(x.rule_count for x in indicators),
+                sum(y.line_count for y in indicators),
+            ]
         )
+    df = (
+        pd.DataFrame(
+            counts,
+            columns=[
+                "Clinical Area",
+                "Indicators",
+                "Rule Count",
+                "Line Count",
+            ],
+        )
+        .sort_values(["Indicators", "Rule Count"], ascending=(False, False))
+        .reset_index(drop=True)
+    )
+    print(df.to_markdown(index=False))
+    df.to_csv(f.parent / "counts.csv")
 
 
 if __name__ == "__main__":
-    # import sys
-    # run_one(sys.argv[1], sys.argv[2])
-    run()
+
+    parser = argparse.ArgumentParser(description="Parse QOF documents")
+    parser.add_argument(
+        "docs_path", type=pathlib.Path, help="Path to QOF docs directory"
+    )
+
+    args = parser.parse_args()
+    run(args.docs_path)
