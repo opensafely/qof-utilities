@@ -11,6 +11,25 @@ import pandas as pd
 import pathlib
 
 
+def parse_table(table, extra_trim=True):
+    """
+    Set the second row as the column headers
+    Remove the first two rows and the last row
+    Register header is one row higher
+    """
+    trim = 0
+    if extra_trim:
+        trim += 1
+    if table is not None:
+        new_table = table.copy()
+        new_table.rename(columns=new_table.iloc[0 + trim], inplace=True)
+        new_table = new_table[1 + trim :].reset_index(drop=True)
+        new_table = new_table[:-1]
+        return new_table
+    else:
+        return pd.DataFrame()
+
+
 class Indicator:
     def __init__(
         self,
@@ -21,52 +40,26 @@ class Indicator:
     ):
         self.indicator_id = indicator_table[0][1]
         self.description = indicator_table[1][1]
-        self.numerator = self._parse_indicator(numerator_table, extra_trim)
-        self.denominator = self._parse_indicator(denominator_table, extra_trim)
-        self.rule_count = len(self.denominator.index) + len(
-            self.numerator.index
-        )
+        self.numerator = parse_table(numerator_table, extra_trim)
+        self.denominator = parse_table(denominator_table, extra_trim)
+        self.rule_count = len(self.denominator.index) + len(self.numerator.index)
         self.line_count = self._line_count()
 
     def __str__(self):
         return self.indicator_id
 
     def __repr__(self):
-        return (
-            "Indicator(indicator_id={}, rule_count={}, line_count={})".format(
-                self.indicator_id, self.rule_count, self.line_count
-            )
+        return "Indicator(indicator_id={}, rule_count={}, line_count={})".format(
+            self.indicator_id, self.rule_count, self.line_count
         )
-
-    def _parse_indicator(self, table, extra_trim=True):
-        """
-        Set the second row as the column headers
-        Remove the first two rows and the last row
-        Register header is one row higher
-        """
-        trim = 0
-        if extra_trim:
-            trim += 1
-        if table is not None:
-            new_table = table.copy()
-            new_table.rename(columns=new_table.iloc[0 + trim], inplace=True)
-            new_table = new_table[1 + trim:].reset_index(drop=True)
-            new_table = new_table[:-1]
-            return new_table
-        else:
-            return pd.DataFrame()
 
     # TODO: Check this is working as expected
     def _line_count(self):
         total = 0
         if not self.numerator.empty:
-            total += sum(
-                len(re.split("OR|AND", x)) for x in self.numerator["Rule"]
-            )
+            total += sum(len(re.split("OR|AND", x)) for x in self.numerator["Rule"])
         if not self.denominator.empty:
-            total += sum(
-                len(re.split("OR|AND", x)) for x in self.denominator["Rule"]
-            )
+            total += sum(len(re.split("OR|AND", x)) for x in self.denominator["Rule"])
         return total
 
 
@@ -133,8 +126,7 @@ def build_table_dictionary(doc):
     for block in iter_block_items(doc):
         if isinstance(block, Table):
             df = [
-                ["" for i in range(len(block.columns))]
-                for j in range(len(block.rows))
+                ["" for i in range(len(block.columns))] for j in range(len(block.rows))
             ]
             for i, row in enumerate(block.rows):
                 for j, cell in enumerate(row.cells):
@@ -142,8 +134,9 @@ def build_table_dictionary(doc):
                         df[i][j] = cell.text.strip()
             table_lookup[last_text].append(pd.DataFrame(df))
         else:
+            # AF was prefixed with 3.2.4\tClinical data extraction criteria
             if "Heading" in block.style.name:
-                last_text = block.text.strip()
+                last_text = re.sub(r"^[\d.-]+\s*", "", block.text.strip())
     return table_lookup
 
 
@@ -157,9 +150,7 @@ def get_register(table_lookup):
     dataset_tables = table_lookup["Case registers"]
     for i in range(len(dataset_tables)):
         if "_REG" in dataset_tables[i][0][1]:
-            return Indicator(
-                dataset_tables[i], dataset_tables[i + 1], extra_trim=False
-            )
+            return Indicator(dataset_tables[i], dataset_tables[i + 1], extra_trim=False)
 
 
 def get_indicators(table_lookup):
@@ -193,16 +184,14 @@ def get_indicators(table_lookup):
                 second_indicator[0] == "End of denominator rules"
             ].index[0]
             if split:
-                third_indicator = second_indicator[split + 1:]
+                third_indicator = second_indicator[split + 1 :]
                 # TODO: find way to drop null rows
                 third_indicator = third_indicator[2:]
                 third_indicator.reset_index(drop=True)
                 second_indicator = second_indicator[:split]
                 # Skip one iteration for the combined table
                 next(ind_iter)
-        indicator_obj = Indicator(
-            indicators[i], second_indicator, third_indicator
-        )
+        indicator_obj = Indicator(indicators[i], second_indicator, third_indicator)
         indicator_dict[indicator_obj.indicator_id] = indicator_obj
     return indicator_dict
 
@@ -214,6 +203,10 @@ def extract_one(doc_path):
     doc = docx.Document(doc_path)
     table_lookup = build_table_dictionary(doc)
     indicators = get_indicators(table_lookup)
+    variables = parse_table(
+        table_lookup["Clinical data extraction criteria"][0], extra_trim=False
+    )
+    codelists = parse_table(table_lookup["Clinical code clusters"][0], extra_trim=False)
     import code
 
     code.interact(local=locals())
@@ -227,6 +220,12 @@ def summary_stats(docs_dir):
         table_lookup = build_table_dictionary(doc)
         register = get_register(table_lookup)
         indicators = get_indicators(table_lookup)
+        variables = parse_table(
+            table_lookup["Clinical data extraction criteria"][0], extra_trim=False
+        )
+        codelists = parse_table(
+            table_lookup["Clinical code clusters"][0], extra_trim=False
+        )
         if register:
             indicators[register.indicator_id] = register
         counts.append(
@@ -235,6 +234,8 @@ def summary_stats(docs_dir):
                 len(indicators),
                 sum(x.rule_count for x in indicators.values()),
                 sum(y.line_count for y in indicators.values()),
+                len(variables),
+                len(codelists),
             ]
         )
     df = (
@@ -245,6 +246,8 @@ def summary_stats(docs_dir):
                 "Indicators",
                 "Rule Count",
                 "Line Count",
+                "Variable count",
+                "Code cluster count",
             ],
         )
         .sort_values(["Indicators", "Rule Count"], ascending=(False, False))
