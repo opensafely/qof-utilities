@@ -244,13 +244,13 @@ def summary_stats(docs_dir):
             columns=[
                 "Clinical Area",
                 "Indicators",
-                "Rule Count",
-                "Line Count",
-                "Variable count",
-                "Code cluster count",
+                "Rules",
+                "Lines",
+                "Variables",
+                "Code clusters",
             ],
         )
-        .sort_values(["Indicators", "Rule Count"], ascending=(False, False))
+        .sort_values(["Indicators", "Rules"], ascending=(False, False))
         .reset_index(drop=True)
     )
     print(df.to_markdown(index=False))
