@@ -1,0 +1,50 @@
+
+# Load packages
+```{r}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(magrittr)
+library(here)
+library(stringr)
+library(janitor)
+```
+
+# Load data
+```{r}
+
+# Read delim, clean names (lowercase) and select variables
+df_codelists <- read_delim(here("codelists/20220309_PCD_Refset_Content.txt"), 
+                           delim="\t",
+                           col_types = "cccccc") %>% 
+   janitor::clean_names() %>% 
+   select(cluster_id, pcd_refset_id, service_and_ruleset)
+
+```
+
+# Clean data
+
+```{r}
+
+# Split service_and_ruleset variable
+# Unnest to pivot longer (one row for each 'codelist service_and_ruleset' pair)
+df_codelist_mapping <- df_codelists %>% 
+  mutate(service_and_ruleset = strsplit(service_and_ruleset, " \\| ")) %>% 
+  unnest(service_and_ruleset) %>% 
+  distinct() %>% 
+  arrange(service_and_ruleset) 
+
+# Check unique codelists and rulestes
+codelists_unique <- unique(df_codelist_mapping$cluster_id)
+service_and_ruleset_unique <- unique(df_codelist_mapping$service_and_ruleset)
+ 
+```
+
+# Write data
+```{r}
+ 
+# Write csv
+df_codelist_mapping %>% 
+  readr::write_csv(here::here("codelists", "ruleset_snomed_cluster_mapping.csv"))
+
+```
