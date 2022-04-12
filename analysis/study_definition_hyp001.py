@@ -19,11 +19,14 @@ study = StudyDefinition(
     population=patients.satisfying(
         """
         # Define general population parameters
-        registered AND
         (NOT died) AND
         (sex = 'F' OR sex = 'M') AND
         (age_band != 'missing') AND
 
+        # Define GMS registration status
+        gms_reg_status AND
+
+        # Define Hypertension register:
         hypertension_register
         """,
     ),
