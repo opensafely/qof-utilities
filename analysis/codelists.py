@@ -89,7 +89,7 @@ learning_disability_codes = codelist_from_csv(
 )
 
 nhse_care_homes_codes = codelist_from_csv(
-    "codelists/opensafely-nhs-england-care-homes-residential-status.csv",
+    "codelists/nhsd-primary-care-domain-refsets-carehome_cod.csv",
     system="snomed",
     column="code",
 )
