@@ -5,8 +5,20 @@ expectations:
 
 actions:
 
-  generate_study_population:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition
+  generate_study_population_xx_001:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_xx_001
     outputs:
       highly_sensitive:
-        cohort: output/input.csv
+        cohort: output/xx_001/input_xx_001.csv
+
+  generate_study_population_yy_001:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_yy_001
+    outputs:
+      highly_sensitive:
+        cohort: output/yy_001/input_yy_001.csv
+  
+  generate_study_population_zz_001:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_zz_001
+    outputs:
+      highly_sensitive:
+        cohort: output/zz_001/input_zz_001.csv
