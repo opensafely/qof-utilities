@@ -11,7 +11,7 @@ actions:
       cohortextractor:latest generate_cohort 
       --study-definition study_definition_ethnicity 
       --index-date-range "2021-04-01 to 2022-03-01 by month" 
-      --output-dir=output/indicators
+      --output-dir=output
       --output-format=csv
     outputs:
       highly_sensitive:
@@ -22,7 +22,7 @@ actions:
       cohortextractor:latest generate_cohort 
       --study-definition study_definition_hyp001 
       --index-date-range "2021-04-01 to 2022-03-01 by month" 
-      --output-dir=output/indicators
+      --output-dir=output
       --output-format=csv
     outputs:
       highly_sensitive:
@@ -32,7 +32,7 @@ actions:
     run: >
       cohort-joiner:v0.0.12 
         --lhs output/input_hyp*.csv
-        --rhs output/input_ethnicity.csv
+        --rhs output/input_ethnicity*.csv
         --output-dir output/joined
     needs: [generate_study_population_ethnicity, generate_study_population_hyp001]
     outputs:
@@ -54,7 +54,7 @@ actions:
       cohortextractor:latest generate_cohort 
       --study-definition study_definition_yy_001 
       --index-date-range "2021-04-01 to 2022-03-01 by month" 
-      --output-dir=output/indicators
+      --output-dir=output
       --output-format=csv
     outputs:
       highly_sensitive:
@@ -65,7 +65,7 @@ actions:
       cohortextractor:latest generate_cohort 
       --study-definition study_definition_zz_001 
       --index-date-range "2021-04-01 to 2022-03-01 by month"
-      --output-dir=output/indicators
+      --output-dir=output
       --output-format=csv
     outputs:
       highly_sensitive:
@@ -79,4 +79,4 @@ actions:
     needs: [generate_measures_hyp001]
     outputs:
       moderately_sensitive:
-        cohort: output/indicators/joined/deciles_chart_*.png
+        cohort: output/joined/deciles_chart_*.png
