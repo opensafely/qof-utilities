@@ -6,6 +6,9 @@ nhsd-primary-care-domain-refsets/hypinvite_cod/20200812
 nhsd-primary-care-domain-refsets/hyppcadec_cod/20200812
 nhsd-primary-care-domain-refsets/hyppcapu_cod/20200812
 nhsd-primary-care-domain-refsets/hypres_cod/20200812
+nhsd-primary-care-domain-refsets/ast_cod/4909d74a
+nhsd-primary-care-domain-refsets/astres_cod/3f770244
+opensafely/asthma-related-drug-treatment-codes/2c3f11a5/
 nhsd-primary-care-domain-refsets/ld_cod/20210127
 opensafely/ethnicity/2020-04-27
 nhsd-primary-care-domain-refsets/carehome_cod/5d2f363a

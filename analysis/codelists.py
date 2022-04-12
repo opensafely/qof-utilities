@@ -75,6 +75,34 @@ hyp_res_codes = codelist_from_csv(
     column="code",
 )
 
+# Cluster name: AST_COD
+# Description: Asthma diagnosis codes
+# SNOMED CT: 
+ast_cod = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-ast_cod.csv",
+    system="snomed",
+    column="code",
+)
+
+# Cluster name: ASTTRT_COD
+# Description: Asthma treatment codes
+# SNOMED CT:
+asttrt_cod = codelist_from_csv(
+    "codelists/opensafely-asthma-related-drug-treatment-codes.csv",
+    system="snomed",
+    column="code",
+)
+
+# Cluster name: ASTRES_COD
+# Description: Asthma resolved codes
+# SNOMED CT:
+astres_cod = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-astres_cod.csv",
+    system="snomed",
+    column="code",
+)
+
+
 ethnicity6_codes = codelist_from_csv(
     "codelists/opensafely-ethnicity.csv",
     system="ctv3",
@@ -89,7 +117,7 @@ learning_disability_codes = codelist_from_csv(
 )
 
 nhse_care_homes_codes = codelist_from_csv(
-    "codelists/opensafely-nhs-england-care-homes-residential-status.csv",
+    "codelists/nhsd-primary-care-domain-refsets-carehome_cod.csv",
     system="snomed",
     column="code",
 )

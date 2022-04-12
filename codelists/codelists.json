@@ -48,6 +48,24 @@
       "downloaded_at": "2022-04-12 10:59:55.010130Z",
       "sha": "8f94d85f3bb7977e96d742a6b0a48551e0f674a2"
     },
+    "nhsd-primary-care-domain-refsets-ast_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/ast_cod/4909d74a",
+      "url": "https://codelists.opensafely.org/codelist/nhsd-primary-care-domain-refsets/ast_cod/4909d74a/",
+      "downloaded_at": "2022-04-12 13:08:46.896485Z",
+      "sha": "662adcbaa8823de22b7f56175420e454da595177"
+    },
+    "nhsd-primary-care-domain-refsets-astres_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/astres_cod/3f770244",
+      "url": "https://codelists.opensafely.org/codelist/nhsd-primary-care-domain-refsets/astres_cod/3f770244/",
+      "downloaded_at": "2022-04-12 13:08:47.057057Z",
+      "sha": "98e2d004cc77c059f3383e22b6d909c561439040"
+    },
+    "opensafely-asthma-related-drug-treatment-codes.csv": {
+      "id": "opensafely/asthma-related-drug-treatment-codes/2c3f11a5",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/asthma-related-drug-treatment-codes/2c3f11a5/",
+      "downloaded_at": "2022-04-12 13:08:47.230540Z",
+      "sha": "7afa53b81d907bae23cb8d3d2cc950bfe625c373"
+    },
     "nhsd-primary-care-domain-refsets-ld_cod.csv": {
       "id": "nhsd-primary-care-domain-refsets/ld_cod/20210127",
       "url": "https://codelists.opensafely.org/codelist/nhsd-primary-care-domain-refsets/ld_cod/20210127/",
@@ -60,11 +78,11 @@
       "downloaded_at": "2022-04-12 10:59:55.573672Z",
       "sha": "3d2f3998b71863a80b24d60f6f4282e14191ae13"
     },
-    "opensafely-nhs-england-care-homes-residential-status.csv": {
-      "id": "opensafely/nhs-england-care-homes-residential-status/3712ef13",
-      "url": "https://codelists.opensafely.org/codelist/opensafely/nhs-england-care-homes-residential-status/3712ef13/",
-      "downloaded_at": "2022-04-12 10:59:55.891046Z",
-      "sha": "357b2af4841e574f7d43bfeff143b39cdfed6997"
+    "nhsd-primary-care-domain-refsets-carehome_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/carehome_cod/5d2f363a",
+      "url": "https://codelists.opensafely.org/codelist/nhsd-primary-care-domain-refsets/carehome_cod/5d2f363a/",
+      "downloaded_at": "2022-04-12 13:08:47.662460Z",
+      "sha": "11a75f8c271f6cd05276f49b038fbda8dfab77fe"
     }
   }
 }

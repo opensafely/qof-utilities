@@ -49,16 +49,16 @@ actions:
        moderately_sensitive:
          measure_csv: output/joined/measure_hyp001_*_rate.csv
   
-  generate_study_population_yy_001:
+  generate_study_population_ast_reg:
     run: > 
       cohortextractor:latest generate_cohort 
-      --study-definition study_definition_yy_001 
+      --study-definition study_definition_ast_reg 
       --index-date-range "2021-04-01 to 2022-03-01 by month" 
       --output-dir=output/indicators
       --output-format=csv
     outputs:
       highly_sensitive:
-        cohort: output/input_yy_001*.csv
+        cohort: output/input_ast_reg*.csv
   
   generate_study_population_zz_001:
     run: > 
