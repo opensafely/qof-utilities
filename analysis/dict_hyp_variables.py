@@ -13,10 +13,6 @@ from codelists import (
 # Define dictionary of variables needed for hypertension register:
 # Patients with an unresolved diagnosis of hypertension
 hyp_reg_variables = dict(
-    registered=patients.registered_as_of(
-        "last_day_of_month(index_date)",
-        return_expectations={"incidence": 0.9},
-    ),
     # Define variables for hypertension (binary) and associated date
     # HYPLAT_DAT (hypertension_date): Date of the most recent hypertension
     # diagnosis up to and including the achievement date.
@@ -44,9 +40,6 @@ hyp_reg_variables = dict(
         date_format="YYYY-MM-DD",
     ),
     # Define hypertension register
-    # REG_DAT (hypertension_register_date): The most recent date that the
-    # patient registered for GMS, where this registration occurred on or
-    # before the achievement date
     hypertension_register=patients.satisfying(
         """
         # Select patients from the specified population who have a diagnosis
