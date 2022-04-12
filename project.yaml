@@ -7,16 +7,26 @@ actions:
 
   
   generate_study_population_ethnicity:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_ethnicity
+    run: > 
+      cohortextractor:latest generate_cohort 
+      --study-definition study_definition_ethnicity 
+      --index-date-range "2021-04-01 to 2022-03-01 by month" 
+      --output-dir=output/indicators
+      --output-format=csv
     outputs:
       highly_sensitive:
-        cohort: output/input_ethnicity.csv
+        cohort: output/input_ethnicity*.csv
 
   generate_study_population_hyp001:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_hyp001
+    run: > 
+      cohortextractor:latest generate_cohort 
+      --study-definition study_definition_hyp001 
+      --index-date-range "2021-04-01 to 2022-03-01 by month" 
+      --output-dir=output/indicators
+      --output-format=csv
     outputs:
       highly_sensitive:
-        cohort: output/input_hyp001.csv
+        cohort: output/input_hyp001*.csv
   
   join_ethnicity_hyp:
     run: >
@@ -29,14 +39,44 @@ actions:
       highly_sensitive:
         cohort: output/joined/input_hyp*.csv
 
+  generate_measures_hyp001:
+     run: >
+       cohortextractor:latest generate_measures 
+       --study-definition study_definition_hyp001 
+       --output-dir=output/joined
+     needs: [join_ethnicity_hyp]
+     outputs:
+       moderately_sensitive:
+         measure_csv: output/joined/measure_hyp001_*_rate.csv
+  
   generate_study_population_yy_001:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_yy_001
+    run: > 
+      cohortextractor:latest generate_cohort 
+      --study-definition study_definition_yy_001 
+      --index-date-range "2021-04-01 to 2022-03-01 by month" 
+      --output-dir=output/indicators
+      --output-format=csv
     outputs:
       highly_sensitive:
-        cohort: output/input_yy_001.csv
+        cohort: output/input_yy_001*.csv
   
   generate_study_population_zz_001:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_zz_001
+    run: > 
+      cohortextractor:latest generate_cohort 
+      --study-definition study_definition_zz_001 
+      --index-date-range "2021-04-01 to 2022-03-01 by month"
+      --output-dir=output/indicators
+      --output-format=csv
     outputs:
       highly_sensitive:
-        cohort: output/input_zz_001.csv
+        cohort: output/input_zz_001*.csv
+  
+  generate_deciles_charts:
+    run: >
+      deciles-charts:v0.0.1
+      --input_dir output/joined
+      --output_dir output/joined
+    needs: [generate_measures_hyp001]
+    outputs:
+      moderately_sensitive:
+        cohort: output/indicators/joined/deciles_chart_*.png
