@@ -9,20 +9,6 @@ bp_codes = codelist_from_csv(
     column="code",
 )
 
-# Codes from BP_COD related systolic blood pressure readings
-bp_sys_codes = codelist_from_csv(
-    "codelists/opensafely-systolic-blood-pressure-qof.csv",
-    system="snomed",
-    column="code",
-)
-
-# Codes from BP_COD related diastolic blood pressure readings
-bp_dia_codes = codelist_from_csv(
-    "codelists/user-milanwiedemann-diastolic-blood-pressure-qof.csv",
-    system="snomed",
-    column="code",
-)
-
 # Cluster name: BPDEC_COD
 # Description: Codes indicating the patient has chosen not to have blood
 # pressure procedure
