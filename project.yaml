@@ -12,20 +12,31 @@ actions:
       highly_sensitive:
         cohort: output/input_ethnicity.csv
 
-  generate_study_population_xx_001:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_xx_001
+  generate_study_population_hyp001:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_hyp001
     outputs:
       highly_sensitive:
-        cohort: output/xx_001/input_xx_001.csv
+        cohort: output/input_hyp001.csv
+  
+  join_ethnicity_hyp:
+    run: >
+      cohort-joiner:v0.0.12 
+        --lhs output/input_hyp*.csv
+        --rhs output/input_ethnicity.csv
+        --output-dir output/joined
+    needs: [generate_study_population_ethnicity, generate_study_population_hyp001]
+    outputs:
+      highly_sensitive:
+        cohort: output/joined/input_hyp*.csv
 
   generate_study_population_yy_001:
     run: cohortextractor:latest generate_cohort --study-definition study_definition_yy_001
     outputs:
       highly_sensitive:
-        cohort: output/yy_001/input_yy_001.csv
+        cohort: output/input_yy_001.csv
   
   generate_study_population_zz_001:
     run: cohortextractor:latest generate_cohort --study-definition study_definition_zz_001
     outputs:
       highly_sensitive:
-        cohort: output/zz_001/input_zz_001.csv
+        cohort: output/input_zz_001.csv
