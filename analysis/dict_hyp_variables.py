@@ -8,13 +8,6 @@ from cohortextractor import patients
 from codelists import (
     hyp_codes,
     hyp_res_codes,
-    bp_sys_codes,
-    bp_dia_codes,
-    ht_max_codes,
-    hyp_pca_pu_codes,
-    hyp_pca_dec_codes,
-    bp_dec_codes,
-    hyp_invite_codes,
 )
 
 # Define unique list of hypertension codes to set expectations in dummy data
