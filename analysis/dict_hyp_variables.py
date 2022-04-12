@@ -10,11 +10,6 @@ from codelists import (
     hyp_res_codes,
 )
 
-# Define unique list of hypertension codes to set expectations in dummy data
-hyp_codes_path = "codelists/nhsd-primary-care-domain-refsets-hyp_cod.csv"
-hyp_codes_df = pd.read_csv(hyp_codes_path)
-hyp_codes_unique = hyp_codes_df["code"].unique()
-
 # Define dictionary of variables needed for hypertension register:
 # Patients with an unresolved diagnosis of hypertension
 hyp_reg_variables = dict(
