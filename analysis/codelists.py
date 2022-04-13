@@ -1,5 +1,9 @@
 from cohortextractor import codelist_from_csv
 
+######################################
+## HYPERTENSION
+######################################
+
 # Cluster name: BP_COD
 # Description: Blood pressure (BP) recording codes
 # SNOMED CT: ^999012731000230108
@@ -75,6 +79,10 @@ hyp_res_codes = codelist_from_csv(
     column="code",
 )
 
+######################################
+## ASTHMA
+######################################
+
 # Cluster name: AST_COD
 # Description: Asthma diagnosis codes
 # SNOMED CT: 
@@ -101,6 +109,32 @@ astres_cod = codelist_from_csv(
     system="snomed",
     column="code",
 )
+
+######################################
+## DIABETES
+######################################
+
+# Cluster name: DM_COD
+# Description: Diabetes diagnosis codes
+# SNOMED CT:
+dm_cod = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-dm_cod.csv",
+    system="snomed",
+    column="code",
+)
+
+# Cluster name: DMRES_COD
+# Description: Diabetes resolve codes
+# SNOMED CT:
+dmres_cod = codelist_from_csv(
+    "codelists/nhsd-primary-care-domain-refsets-dmres_cod.csv",
+    system="snomed",
+    column="code",
+)
+
+######################################
+## Demographic codelists
+######################################
 
 
 ethnicity6_codes = codelist_from_csv(

@@ -8,6 +8,8 @@ nhsd-primary-care-domain-refsets/hyppcapu_cod/20200812
 nhsd-primary-care-domain-refsets/hypres_cod/20200812
 nhsd-primary-care-domain-refsets/ast_cod/4909d74a
 nhsd-primary-care-domain-refsets/astres_cod/3f770244
+nhsd-primary-care-domain-refsets/dm_cod/20210127
+nhsd-primary-care-domain-refsets/dmres_cod/20200812
 opensafely/asthma-related-drug-treatment-codes/2c3f11a5/
 nhsd-primary-care-domain-refsets/ld_cod/20210127
 opensafely/ethnicity/2020-04-27

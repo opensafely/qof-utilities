@@ -4,9 +4,9 @@ import json
 import pandas as pd
 
 from config import start_date, end_date
-from codelists import ast_cod, asttrt_cod, astres_cod
+from codelists import dm_cod, dmres_cod
 
-from dict_asthma_variables import ast_reg_variables
+from dict_diabetes_variables import dm_reg_variables
 from dict_demographic_variables import demographic_variables
 
 study = StudyDefinition(
@@ -20,16 +20,17 @@ study = StudyDefinition(
         """
         # Define general population parameters
         (NOT died) AND
-
+        
         # Define GMS registration status
         gms_reg_status AND
 
-        # Asthma list size age restriction
-        age >= 6
+        # Diabetes list size age restriction
+        age > 17
+
         """,
     ),
-    # Include asthma variables
-    **ast_reg_variables,
+    # Include diabetes variables
+    **dm_reg_variables,
     # Include demographic variables
     **demographic_variables,
 )
@@ -37,64 +38,64 @@ study = StudyDefinition(
 # Create default measures
 measures = [
     Measure(
-        id="ast_reg_population_rate",
-        numerator="asthma",
+        id="dm_population_rate",
+        numerator="diabetes",
         denominator="population",
         group_by=["population"],
         small_number_suppression=True,
     ),
     Measure(
-        id="ast_reg_practice_rate",
-        numerator="ast_reg",
+        id="dm_practice_rate",
+        numerator="diabetes",
         denominator="population",
         group_by=["practice"],
         small_number_suppression=True,
     ),
     Measure(
-        id="ast_reg_age_rate",
-        numerator="asthma",
+        id="dm_age_rate",
+        numerator="diabetes",
         denominator="population",
         group_by=["age_band"],
         small_number_suppression=True,
     ),
     Measure(
-        id="ast_reg_sex_rate",
-        numerator="asthma",
+        id="dm_sex_rate",
+        numerator="diabetes",
         denominator="population",
         group_by=["sex"],
         small_number_suppression=True,
     ),
     Measure(
-        id="ast_reg_imd_rate",
-        numerator="asthma",
+        id="dm_imd_rate",
+        numerator="diabetes",
         denominator="population",
         group_by=["imd"],
         small_number_suppression=True,
     ),
     Measure(
-        id="ast_reg_region_rate",
-        numerator="asthma",
+        id="dm_region_rate",
+        numerator="diabetes",
         denominator="population",
         group_by=["region"],
         small_number_suppression=True,
     ),
     Measure(
-        id="ast_reg_ethnicity_rate",
-        numerator="asthma",
+        id="dm_ethnicity_rate",
+        numerator="diabetes",
         denominator="population",
         group_by=["ethnicity"],
         small_number_suppression=True,
     ),
     Measure(
-        id="ast_reg_learning_disability_rate",
-        numerator="asthma",
+        id="dm_learning_disability_rate",
+        numerator="diabetes",
         denominator="population",
         group_by=["learning_disability"],
         small_number_suppression=True,
     ),
     Measure(
-        id="ast_reg_care_home_rate",
-        numerator="asthma",
+        id="dm_care_home_rate",
+        numerator="diabetes",
         denominator="population",
         group_by=["care_home"],
         small_number_suppression=True,

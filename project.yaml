@@ -59,6 +59,17 @@ actions:
     outputs:
       highly_sensitive:
         cohort: output/input_ast_reg*.csv
+
+  generate_study_population_dm_reg:
+    run: > 
+      cohortextractor:latest generate_cohort 
+      --study-definition study_definition_dm_reg 
+      --index-date-range "2021-04-01 to 2022-03-01 by month" 
+      --output-dir=output/indicators
+      --output-format=csv
+    outputs:
+      highly_sensitive:
+        cohort: output/input_dm_reg*.csv        
   
   generate_study_population_zz_001:
     run: > 

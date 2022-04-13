@@ -60,6 +60,18 @@
       "downloaded_at": "2022-04-12 13:08:47.057057Z",
       "sha": "98e2d004cc77c059f3383e22b6d909c561439040"
     },
+    "nhsd-primary-care-domain-refsets-dm_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/dm_cod/20210127",
+      "url": "https://codelists.opensafely.org/codelist/nhsd-primary-care-domain-refsets/dm_cod/20210127/",
+      "downloaded_at": "2022-04-12 16:24:39.558059Z",
+      "sha": "ce6f9083aa89bfe6935159ffc66755d4439ff0de"
+    },
+    "nhsd-primary-care-domain-refsets-dmres_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/dmres_cod/20200812",
+      "url": "https://codelists.opensafely.org/codelist/nhsd-primary-care-domain-refsets/dmres_cod/20200812/",
+      "downloaded_at": "2022-04-12 16:24:39.702719Z",
+      "sha": "57682a6345da78472609f01f1ca065ace27fcb43"
+    },
     "opensafely-asthma-related-drug-treatment-codes.csv": {
       "id": "opensafely/asthma-related-drug-treatment-codes/2c3f11a5",
       "url": "https://codelists.opensafely.org/codelist/opensafely/asthma-related-drug-treatment-codes/2c3f11a5/",
