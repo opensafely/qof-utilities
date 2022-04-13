@@ -77,6 +77,18 @@
       "url": "https://codelists.opensafely.org/codelist/nhsd-primary-care-domain-refsets/carehome_cod/5d2f363a/",
       "downloaded_at": "2022-04-12 12:57:22.692877Z",
       "sha": "11a75f8c271f6cd05276f49b038fbda8dfab77fe"
+    },
+    "nhsd-primary-care-domain-refsets-strk_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/strk_cod/20210127",
+      "url": "https://codelists.opensafely.org/codelist/nhsd-primary-care-domain-refsets/strk_cod/20210127/",
+      "downloaded_at": "2022-04-13 07:34:47.428498Z",
+      "sha": "b1b9e1cedbd0c76a81f4a71d9bf1002cda4edf73"
+    },
+    "nhsd-primary-care-domain-refsets-tia_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/tia_cod/20201016",
+      "url": "https://codelists.opensafely.org/codelist/nhsd-primary-care-domain-refsets/tia_cod/20201016/",
+      "downloaded_at": "2022-04-13 07:34:47.739675Z",
+      "sha": "4b8ccd245bf8acdde3ffb55392dc6ae5d3ce4a22"
     }
   }
 }
