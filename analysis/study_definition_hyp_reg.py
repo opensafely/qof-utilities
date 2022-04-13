@@ -26,10 +26,10 @@ study = StudyDefinition(
         (age_band != 'missing') AND
 
         # Define GMS registration status
-        gms_reg_status AND
+        gms_reg_status
 
-        # Define Hypertension register
-        hyp_reg
+        # Define list size type:
+        # TOTAL for HYP so no further exclusions
         """,
     ),
     # Include hypertension and demographic variable dictionaries
@@ -37,66 +37,66 @@ study = StudyDefinition(
     **demographic_variables,
 )
 
-# Create hypertension register (hyp001) measures
+# Create hypertension register (hyp_reg) measures
 measures = [
     Measure(
-        id="hyp001_population_rate",
+        id="hyp_reg_population_rate",
         numerator="hyp_reg",
         denominator="population",
         group_by=["population"],
         small_number_suppression=True,
     ),
     Measure(
-        id="hyp001_practice_rate",
+        id="hyp_reg_practice_rate",
         numerator="hyp_reg",
         denominator="population",
         group_by=["practice"],
         small_number_suppression=True,
     ),
     Measure(
-        id="hyp001_age_rate",
+        id="hyp_reg_age_rate",
         numerator="hyp_reg",
         denominator="population",
         group_by=["age_band"],
         small_number_suppression=True,
     ),
     Measure(
-        id="hyp001_sex_rate",
+        id="hyp_reg_sex_rate",
         numerator="hyp_reg",
         denominator="population",
         group_by=["sex"],
         small_number_suppression=True,
     ),
     Measure(
-        id="hyp001_imd_rate",
+        id="hyp_reg_imd_rate",
         numerator="hyp_reg",
         denominator="population",
         group_by=["imd"],
         small_number_suppression=True,
     ),
     Measure(
-        id="hyp001_region_rate",
+        id="hyp_reg_region_rate",
         numerator="hyp_reg",
         denominator="population",
         group_by=["region"],
         small_number_suppression=True,
     ),
     Measure(
-        id="hyp001_ethnicity_rate",
+        id="hyp_reg_ethnicity_rate",
         numerator="hyp_reg",
         denominator="population",
         group_by=["ethnicity"],
         small_number_suppression=True,
     ),
     Measure(
-        id="hyp001_learning_disability_rate",
+        id="hyp_reg_learning_disability_rate",
         numerator="hyp_reg",
         denominator="population",
         group_by=["learning_disability"],
         small_number_suppression=True,
     ),
     Measure(
-        id="hyp001_care_home_rate",
+        id="hyp_reg_care_home_rate",
         numerator="hyp_reg",
         denominator="population",
         group_by=["care_home"],

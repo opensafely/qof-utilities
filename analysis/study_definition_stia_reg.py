@@ -26,10 +26,10 @@ study = StudyDefinition(
         (age_band != 'missing') AND
 
         # Define GMS registration status
-        gms_reg_status AND
+        gms_reg_status
 
-        # Define stroke and TIA register
-        stia_reg
+        # Define list size type:
+        # TOTAL for STIA so no further exclusions
         """,
     ),
     # Include Stroke and TIA and demographic variable dictionaries
@@ -37,66 +37,66 @@ study = StudyDefinition(
     **demographic_variables,
 )
 
-# Create Stroke and TIA register (stia001) measures
+# Create Stroke and TIA register (stia_reg) measures
 measures = [
     Measure(
-        id="stia001_population_rate",
+        id="stia_reg_population_rate",
         numerator="stia_reg",
         denominator="population",
         group_by=["population"],
         small_number_suppression=True,
     ),
     Measure(
-        id="stia001_practice_rate",
+        id="stia_reg_practice_rate",
         numerator="stia_reg",
         denominator="population",
         group_by=["practice"],
         small_number_suppression=True,
     ),
     Measure(
-        id="stia001_age_rate",
+        id="stia_reg_age_rate",
         numerator="stia_reg",
         denominator="population",
         group_by=["age_band"],
         small_number_suppression=True,
     ),
     Measure(
-        id="stia001_sex_rate",
+        id="stia_reg_sex_rate",
         numerator="stia_reg",
         denominator="population",
         group_by=["sex"],
         small_number_suppression=True,
     ),
     Measure(
-        id="stia001_imd_rate",
+        id="stia_reg_imd_rate",
         numerator="stia_reg",
         denominator="population",
         group_by=["imd"],
         small_number_suppression=True,
     ),
     Measure(
-        id="stia001_region_rate",
+        id="stia_reg_region_rate",
         numerator="stia_reg",
         denominator="population",
         group_by=["region"],
         small_number_suppression=True,
     ),
     Measure(
-        id="stia001_ethnicity_rate",
+        id="stia_reg_ethnicity_rate",
         numerator="stia_reg",
         denominator="population",
         group_by=["ethnicity"],
         small_number_suppression=True,
     ),
     Measure(
-        id="stia001_learning_disability_rate",
+        id="stia_reg_learning_disability_rate",
         numerator="stia_reg",
         denominator="population",
         group_by=["learning_disability"],
         small_number_suppression=True,
     ),
     Measure(
-        id="stia001_care_home_rate",
+        id="stia_reg_care_home_rate",
         numerator="stia_reg",
         denominator="population",
         group_by=["care_home"],
