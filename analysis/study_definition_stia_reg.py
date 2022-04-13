@@ -27,6 +27,9 @@ study = StudyDefinition(
 
         # Define GMS registration status
         gms_reg_status
+
+        # Define list size type:
+        # TOTAL for STIA so no further exclusions
         """,
     ),
     # Include Stroke and TIA and demographic variable dictionaries

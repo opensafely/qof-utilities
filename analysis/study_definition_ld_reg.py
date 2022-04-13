@@ -27,6 +27,9 @@ study = StudyDefinition(
 
         # Define GMS registration status
         gms_reg_status
+
+        # Define list size type:
+        # TOTAL for LD so no further exclusions
         """,
     ),
     # Include learning disability and demographic variable dictionaries

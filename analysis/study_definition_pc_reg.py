@@ -30,6 +30,9 @@ study = StudyDefinition(
 
         # Define GMS registration status
         gms_reg_status
+
+        # Define list size type:
+        # TOTAL for PC so no further exclusions
         """,
     ),
     # Include calliative care and demographic variable dictionaries
