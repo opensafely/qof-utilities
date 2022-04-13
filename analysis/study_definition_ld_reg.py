@@ -37,67 +37,59 @@ study = StudyDefinition(
     **demographic_variables,
 )
 
-# Create learning disability register (ld004) measures
+# Create learning disability register (ld_reg) measures
 measures = [
     Measure(
-        id="ld004_population_rate",
+        id="ld_reg_population_rate",
         numerator="ld",
         denominator="population",
         group_by=["population"],
         small_number_suppression=True,
     ),
     Measure(
-        id="ld004_practice_rate",
+        id="ld_reg_practice_rate",
         numerator="ld",
         denominator="population",
         group_by=["practice"],
         small_number_suppression=True,
     ),
     Measure(
-        id="ld004_age_rate",
+        id="ld_reg_age_rate",
         numerator="ld",
         denominator="population",
         group_by=["age_band"],
         small_number_suppression=True,
     ),
     Measure(
-        id="ld004_sex_rate",
+        id="ld_reg_sex_rate",
         numerator="ld",
         denominator="population",
         group_by=["sex"],
         small_number_suppression=True,
     ),
     Measure(
-        id="ld004_imd_rate",
+        id="ld_reg_imd_rate",
         numerator="ld",
         denominator="population",
         group_by=["imd"],
         small_number_suppression=True,
     ),
     Measure(
-        id="ld004_region_rate",
+        id="ld_reg_region_rate",
         numerator="ld",
         denominator="population",
         group_by=["region"],
         small_number_suppression=True,
     ),
     Measure(
-        id="ld004_ethnicity_rate",
+        id="ld_reg_ethnicity_rate",
         numerator="ld",
         denominator="population",
         group_by=["ethnicity"],
         small_number_suppression=True,
     ),
-    # Dont include group by learning_disability for ld register
-    # Measure(
-    #     id="ld004_learning_disability_rate",
-    #     numerator="ld",
-    #     denominator="population",
-    #     group_by=["learning_disability"],
-    #     small_number_suppression=True,
-    # ),
     Measure(
-        id="ld004_care_home_rate",
+        id="ld_reg_care_home_rate",
         numerator="ld",
         denominator="population",
         group_by=["care_home"],

@@ -40,66 +40,66 @@ study = StudyDefinition(
     **demographic_variables,
 )
 
-# Create calliative care register (pc001) measures
+# Create calliative care register (pc_reg) measures
 measures = [
     Measure(
-        id="pc001_population_rate",
+        id="pc_reg_population_rate",
         numerator="pal_care",
         denominator="population",
         group_by=["population"],
         small_number_suppression=True,
     ),
     Measure(
-        id="pc001_practice_rate",
+        id="pc_reg_practice_rate",
         numerator="pal_care",
         denominator="population",
         group_by=["practice"],
         small_number_suppression=True,
     ),
     Measure(
-        id="pc001_age_rate",
+        id="pc_reg_age_rate",
         numerator="pal_care",
         denominator="population",
         group_by=["age_band"],
         small_number_suppression=True,
     ),
     Measure(
-        id="pc001_sex_rate",
+        id="pc_reg_sex_rate",
         numerator="pal_care",
         denominator="population",
         group_by=["sex"],
         small_number_suppression=True,
     ),
     Measure(
-        id="pc001_imd_rate",
+        id="pc_reg_imd_rate",
         numerator="pal_care",
         denominator="population",
         group_by=["imd"],
         small_number_suppression=True,
     ),
     Measure(
-        id="pc001_region_rate",
+        id="pc_reg_region_rate",
         numerator="pal_care",
         denominator="population",
         group_by=["region"],
         small_number_suppression=True,
     ),
     Measure(
-        id="pc001_ethnicity_rate",
+        id="pc_reg_ethnicity_rate",
         numerator="pal_care",
         denominator="population",
         group_by=["ethnicity"],
         small_number_suppression=True,
     ),
     Measure(
-        id="pc001_learning_disability_rate",
+        id="pc_reg_learning_disability_rate",
         numerator="pal_care",
         denominator="population",
         group_by=["learning_disability"],
         small_number_suppression=True,
     ),
     Measure(
-        id="pc001_care_home_rate",
+        id="pc_reg_care_home_rate",
         numerator="pal_care",
         denominator="population",
         group_by=["care_home"],
