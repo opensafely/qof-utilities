@@ -148,6 +148,30 @@ actions:
      outputs:
        moderately_sensitive:
          measure_csv: output/joined/measure_stia_reg_*_rate.csv
+
+  # Asthma register (ast_reg)
+  generate_study_population_ast_reg:
+    run: > 
+      cohortextractor:latest generate_cohort 
+      --study-definition study_definition_ast_reg 
+      --index-date-range "2021-04-01 to 2022-03-01 by month" 
+      --output-dir=output
+      --output-format=csv
+    outputs:
+      highly_sensitive:
+        cohort: output/input_ast_reg*.csv
+
+  # Diabetes register (dm_reg)
+  generate_study_population_dm_reg:
+    run: > 
+      cohortextractor:latest generate_cohort 
+      --study-definition study_definition_dm_reg 
+      --index-date-range "2021-04-01 to 2022-03-01 by month" 
+      --output-dir=output
+      --output-format=csv
+    outputs:
+      highly_sensitive:
+        cohort: output/input_dm_reg*.csv     
   
   # Generate decile charts
   # TODO: Currently commented out because returning errors
