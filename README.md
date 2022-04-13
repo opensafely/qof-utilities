@@ -2,8 +2,9 @@
 
 ## Motivation
 
-The goal of this repository is to help a researcher build on the OpenSAFELY [research-template](https://github.com/opensafely/research-template) to investigate montly changes in Quality and Outcomes Framework ([QOF](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof)) indicators.
-This repo contains resources, discussion, and issues surrounding the use of OpenSAFELY to assess the impact of the pandemic on routine care through the assessment of the Quality and Outcomes Framework ([QOF](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof)).
+The goal of this repository is to help a researcher build on the OpenSAFELY [research-template](https://github.com/opensafely/research-template) to investigate montly changes in Quality and Outcomes Framework ([QOF](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof)) registers.
+This repo contains [resources](/), [discussion](https://github.com/opensafely/qof-utilities/discussions), and [issues](https://github.com/opensafely/qof-utilities/issues) surrounding the use of OpenSAFELY to assess the impact of the pandemic on routine care through the assessment of ([QOF](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof)).
+
 New QOF studies should start by using the [OpenSAFELY research template](https://github.com/opensafely/research-template) and follow the general structure of this repository where possible, see ['Repository structure'](#repository-structure) section below.
 
 ## QOF business rules for registers
