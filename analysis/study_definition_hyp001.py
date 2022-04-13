@@ -4,7 +4,7 @@ import json
 import pandas as pd
 
 from config import start_date, end_date
-from codelists import hyp_codes, hyp_res_codes
+from codelists_hyp001 import hyp_codes, hyp_res_codes
 
 from dict_hyp_variables import hyp_reg_variables
 from dict_demographic_variables import demographic_variables

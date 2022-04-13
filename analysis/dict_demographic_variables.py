@@ -2,7 +2,7 @@
 # See https://docs.opensafely.org/study-def-tricks/
 
 from cohortextractor import patients
-from codelists import nhse_care_homes_codes, learning_disability_codes
+from codelists_hyp001 import nhse_care_homes_codes, learning_disability_codes
 
 demographic_variables = dict(
     # GMS registration status

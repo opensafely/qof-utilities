@@ -5,7 +5,7 @@
 import pandas as pd
 from config import start_date, end_date
 from cohortextractor import patients
-from codelists import (
+from codelists_hyp001 import (
     hyp_codes,
     hyp_res_codes,
 )
