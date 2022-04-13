@@ -11,6 +11,8 @@ from codelists_ld import (
 
 # Define dictionary of variables needed for learning disability register:
 ld_reg_variables = dict(
+    # ld: Date of the most recent learning disability diagnosis up to and
+    # including the achievement date.
     ld=patients.with_these_clinical_events(
         ld_codes,
         on_or_before="last_day_of_month(index_date)",
