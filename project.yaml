@@ -83,6 +83,39 @@ actions:
        moderately_sensitive:
          measure_csv: output/joined/measure_ld004_*_rate.csv
 
+  # Palliative care (Indicator PC001)
+  generate_study_population_pc001:
+    run: > 
+      cohortextractor:latest generate_cohort 
+      --study-definition study_definition_pc001 
+      --index-date-range "2021-04-01 to 2022-03-01 by month" 
+      --output-dir=output
+      --output-format=csv
+    outputs:
+      highly_sensitive:
+        cohort: output/input_pc001*.csv
+  
+  join_ethnicity_pc:
+    run: >
+      cohort-joiner:v0.0.12 
+        --lhs output/input_pc*.csv
+        --rhs output/input_ethnicity*.csv
+        --output-dir output/joined
+    needs: [generate_study_population_ethnicity, generate_study_population_pc001]
+    outputs:
+      highly_sensitive:
+        cohort: output/joined/input_pc*.csv
+
+  generate_measures_pc001:
+     run: >
+       cohortextractor:latest generate_measures 
+       --study-definition study_definition_pc001 
+       --output-dir=output/joined
+     needs: [join_ethnicity_pc]
+     outputs:
+       moderately_sensitive:
+         measure_csv: output/joined/measure_pc001_*_rate.csv
+
   # ZZ EXAMPLE REGISTER FOR TESTING
   # TODO: TO BE DELETED LATER
   generate_study_population_yy_001:
@@ -110,12 +143,13 @@ actions:
         cohort: output/input_zz_001*.csv
   
   # Generate decile charts
-  generate_deciles_charts:
-    run: >
-      deciles-charts:v0.0.1
-      --input_dir output/joined
-      --output_dir output/joined
-    needs: [generate_measures_hyp001, generate_measures_ld004]
-    outputs:
-      moderately_sensitive:
-        cohort: output/joined/deciles_chart_*.png
+  # TODO: Currently commented out because returning errors
+  # generate_deciles_charts:
+  #   run: >
+  #     deciles-charts:v0.0.1
+  #     --input_dir output/joined
+  #     --output_dir output/joined
+  #   needs: [generate_measures_hyp001, generate_measures_ld004, generate_measures_pc001]
+  #   outputs:
+  #     moderately_sensitive:
+  #       cohort: output/joined/deciles_chart_*.png
