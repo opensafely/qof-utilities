@@ -14,7 +14,7 @@ from codelists_ast import (
 # Patients with an unresolved diagnosis of asthma
 ast_reg_variables = dict(
   
-# Asthma specific variables    
+    # Asthma specific variables    
     had_asthma=patients.with_these_clinical_events(
             ast_cod,
             on_or_before="last_day_of_month(index_date)",
@@ -24,7 +24,8 @@ ast_reg_variables = dict(
 
     had_asthma_drug_treatment=patients.with_these_medications(
             asttrt_cod,
-            between =["last_day_of_month(index_date) - 365 days", "last_day_of_month(index_date)"],
+            between =["last_day_of_month(index_date) - 365 days",
+                      "last_day_of_month(index_date)"],
             returning='binary_flag',
             return_expectations={"incidence": 0.9}
     ),
@@ -45,7 +46,7 @@ ast_reg_variables = dict(
     ),
 # age_as_of function defaults to providing age at the beginning of the month specified. To 
 # get the age at the end of the month (actually 1 day after), add 1 day to the value to push to the next month
-    age_ast_reg = patients.age_as_of(
+    age_ast_reg=patients.age_as_of(
         "last_day_of_month(index_date) + 1 day",
         return_expectations={
             "rate": "universal",
@@ -54,7 +55,7 @@ ast_reg_variables = dict(
     ),
 
 # population restrictions will already be applied to this cohort using the special variable 'population'
-    asthma=patients.satisfying(
+    asthma_reg=patients.satisfying(
         """
         # Asthma register rule 1
         had_asthma AND
