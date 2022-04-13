@@ -5,7 +5,7 @@ import pandas as pd
 
 # Import dates and codelists
 from config import start_date, end_date
-from codelists_stia import stia_codes
+from codelists_stia import strk_codes, tia_codes
 
 # Import shared variable dictionaries
 from dict_stia_variables import stia_reg_variables
