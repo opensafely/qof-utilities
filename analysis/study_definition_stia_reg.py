@@ -26,10 +26,7 @@ study = StudyDefinition(
         (age_band != 'missing') AND
 
         # Define GMS registration status
-        gms_reg_status AND
-
-        # Define stroke and TIA register
-        stia_reg
+        gms_reg_status
         """,
     ),
     # Include Stroke and TIA and demographic variable dictionaries

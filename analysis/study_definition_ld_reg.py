@@ -26,10 +26,7 @@ study = StudyDefinition(
         (age_band != 'missing') AND
 
         # Define GMS registration status
-        gms_reg_status AND
-
-        # Define learning disability register
-        ld_reg
+        gms_reg_status
         """,
     ),
     # Include learning disability and demographic variable dictionaries
@@ -41,56 +38,56 @@ study = StudyDefinition(
 measures = [
     Measure(
         id="ld_reg_population_rate",
-        numerator="ld",
+        numerator="ld_reg",
         denominator="population",
         group_by=["population"],
         small_number_suppression=True,
     ),
     Measure(
         id="ld_reg_practice_rate",
-        numerator="ld",
+        numerator="ld_reg",
         denominator="population",
         group_by=["practice"],
         small_number_suppression=True,
     ),
     Measure(
         id="ld_reg_age_rate",
-        numerator="ld",
+        numerator="ld_reg",
         denominator="population",
         group_by=["age_band"],
         small_number_suppression=True,
     ),
     Measure(
         id="ld_reg_sex_rate",
-        numerator="ld",
+        numerator="ld_reg",
         denominator="population",
         group_by=["sex"],
         small_number_suppression=True,
     ),
     Measure(
         id="ld_reg_imd_rate",
-        numerator="ld",
+        numerator="ld_reg",
         denominator="population",
         group_by=["imd"],
         small_number_suppression=True,
     ),
     Measure(
         id="ld_reg_region_rate",
-        numerator="ld",
+        numerator="ld_reg",
         denominator="population",
         group_by=["region"],
         small_number_suppression=True,
     ),
     Measure(
         id="ld_reg_ethnicity_rate",
-        numerator="ld",
+        numerator="ld_reg",
         denominator="population",
         group_by=["ethnicity"],
         small_number_suppression=True,
     ),
     Measure(
         id="ld_reg_care_home_rate",
-        numerator="ld",
+        numerator="ld_reg",
         denominator="population",
         group_by=["care_home"],
         small_number_suppression=True,

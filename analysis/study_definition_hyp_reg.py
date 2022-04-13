@@ -26,10 +26,7 @@ study = StudyDefinition(
         (age_band != 'missing') AND
 
         # Define GMS registration status
-        gms_reg_status AND
-
-        # Define Hypertension register
-        hyp_reg
+        gms_reg_status
         """,
     ),
     # Include hypertension and demographic variable dictionaries

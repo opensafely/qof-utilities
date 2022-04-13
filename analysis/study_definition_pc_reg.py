@@ -29,10 +29,7 @@ study = StudyDefinition(
         (age_band != 'missing') AND
 
         # Define GMS registration status
-        gms_reg_status AND
-
-        # Define calliative care register
-        pal_care_reg
+        gms_reg_status
         """,
     ),
     # Include calliative care and demographic variable dictionaries
