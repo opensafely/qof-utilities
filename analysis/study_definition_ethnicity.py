@@ -7,7 +7,7 @@ from cohortextractor import (
 )
 
 from config import end_date
-from codelists_hyp001 import ethnicity6_codes
+from codelists_demographic import ethnicity6_codes
 
 study = StudyDefinition(
     default_expectations={

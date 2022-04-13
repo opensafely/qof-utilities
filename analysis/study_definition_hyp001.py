@@ -5,7 +5,7 @@ import pandas as pd
 
 # Import dates and codelists
 from config import start_date, end_date
-from codelists_hyp001 import hyp_codes, hyp_res_codes
+from codelists_hyp import hyp_codes, hyp_res_codes
 
 # Import shared variable dictionaries
 from dict_hyp_variables import hyp_reg_variables
