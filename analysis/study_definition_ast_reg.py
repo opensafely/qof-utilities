@@ -43,7 +43,7 @@ measures = [
     ),
     Measure(
         id="ast_reg_practice_rate",
-        numerator="ast_reg",
+        numerator="asthma",
         denominator="population",
         group_by=["practice"],
         small_number_suppression=True,
