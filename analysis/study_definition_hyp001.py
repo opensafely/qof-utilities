@@ -3,9 +3,11 @@ from cohortextractor import StudyDefinition, patients, Measure
 import json
 import pandas as pd
 
+# Import dates and codelists
 from config import start_date, end_date
 from codelists_hyp001 import hyp_codes, hyp_res_codes
 
+# Import shared variable dictionaries
 from dict_hyp_variables import hyp_reg_variables
 from dict_demographic_variables import demographic_variables
 
@@ -26,17 +28,16 @@ study = StudyDefinition(
         # Define GMS registration status
         gms_reg_status AND
 
-        # Define Hypertension register:
+        # Define Hypertension register
         hyp_reg
         """,
     ),
-    # Include hypertension variables
+    # Include hypertension and demographic variable dictionaries
     **hyp_reg_variables,
-    # Include demographic variables
     **demographic_variables,
 )
 
-# Create default measures
+# Create hypertension register (hyp001) measures
 measures = [
     Measure(
         id="hyp001_population_rate",
@@ -80,13 +81,13 @@ measures = [
         group_by=["region"],
         small_number_suppression=True,
     ),
-    # Measure(
-    #     id="hyp001_ethnicity_rate",
-    #     numerator="hyp",
-    #     denominator="population",
-    #     group_by=["ethnicity"],
-    #     small_number_suppression=True,
-    # ),
+    Measure(
+        id="hyp001_ethnicity_rate",
+        numerator="hyp",
+        denominator="population",
+        group_by=["ethnicity"],
+        small_number_suppression=True,
+    ),
     Measure(
         id="hyp001_learning_disability_rate",
         numerator="hyp",
