@@ -1,65 +1,78 @@
 # Using OpenSAFELY to analyse QOF indicators
 
-## Abstract
-
-The goal of this repository is to help a researcher build on the OpenSAFELY [research-template](https://github.com/opensafely/research-template) to investigate montly changes in Quality and Outcomes Framework ([QOF](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof)) indicators.
-
-This repo contains resources, discussion, and issues surrounding the use of OpenSAFELY to assess the impact of the pandemic on routine care through the assessment of the Quality and Outcomes Framework ([QOF](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof)).
-
 ## Motivation
 
-A couple of us are working on QOF indicators .
-There are 25 clinical areas (e.g., Asthma, Hypertension) with 68 indicators, some with complex rules.
-A .zip folder with all rules can be found [here](https://digital.nhs.uk/data-and-information/data-collections-and-data-sets/data-collections/quality-and-outcomes-framework-qof/quality-and-outcome-framework-qof-business-rules/qof-business-rules-v46.0-2021-2022-baseline-release). 
+The goal of this repository is to help a researcher build on the OpenSAFELY [research-template](https://github.com/opensafely/research-template) to investigate montly changes in Quality and Outcomes Framework ([QOF](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof)) registers.
+This repo contains [resources](/), [discussion](https://github.com/opensafely/qof-utilities/discussions), and [issues](https://github.com/opensafely/qof-utilities/issues) surrounding the use of OpenSAFELY to assess the impact of the pandemic on routine care through the assessment of ([QOF](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof)).
 
-We thought that organising our QOF developments (while still learning the general case) using a single GitHub repo (not a GitHub template) with (1) shared utility functions, (2) documentation on starting from the research template, and  (3) ongoing discussions would help to:
+New QOF studies should start by using the [OpenSAFELY research template](https://github.com/opensafely/research-template) and follow the general structure of this repository where possible, see ['Repository structure'](#repository-structure) section below.
 
-- Collect and discuss general issues with QOF (project specific issues will live in their respective repo)
-- Guide decision making towards which aspects could potentially become reusable actions, go into a shared library, or are project specific and need to be guided by detailed documentation
+## QOF business rules for registers
 
-## QOF Rule Complexity
+[The Quality and Outcomes Framework (QOF)](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof) outlines several indicators that focus hypertension (HYP) targets. 
+This project aims to use OpenSAFELY to quantify the extent to which any of the relevant Hypertension QOF indicators ([v46](https://digital.nhs.uk/data-and-information/data-collections-and-data-sets/data-collections/quality-and-outcomes-framework-qof/quality-and-outcome-framework-qof-business-rules/qof-business-rules-v46.0-2021-2022-baseline-release)) were disrupted during the pandemic but wont link our results to clinical outcomes.
+A short description of the QOF Hypertension ([v46](https://digital.nhs.uk/data-and-information/data-collections-and-data-sets/data-collections/quality-and-outcomes-framework-qof/quality-and-outcome-framework-qof-business-rules/qof-business-rules-v46.0-2021-2022-baseline-release)) register and each indicator is shown below:
 
-This table describes potential "complexity" metrics for the QOF indicators, see code on the [doc_parsing](https://github.com/opensafely/qof-utilities/tree/doc_parsing) branch.
-> :warning: **IN PROGRESS, NUMBERS NOT FINAL** includes register as an indicator for all clinical areas but excludes the Vaccination "Cohorts"
-	
-| Clinical Area                           |   Indicators |   Rule Count |   Line Count |
-|:----------------------------------------|-------------:|-------------:|-------------:|
-| Diabetes_v46.0.docx                     |            9 |           99 |          172 |
-| Mental_health_v46.2.docx                |            7 |           59 |           82 |
-| HF_v46.0.docx                           |            5 |           49 |           32 |
-| Asthma_v46.0.docx                       |            4 |           46 |          114 |
-| Smoking_v46.0.docx                      |            4 |           33 |          101 |
-| Stroke_v46.0.docx                       |            4 |           32 |          101 |
-| CHD_v46.0.docx                          |            4 |           31 |           89 |
-| Vaccination and Immunisation_v46.0.docx |            4 |           16 |           36 |
-| COPD_v46.0.docx                         |            3 |           23 |           35 |
-| Cancer_v46.1.docx                       |            3 |           22 |           23 |
-| Hypertension_v46.0.docx                 |            3 |           21 |           44 |
-| Atrial_Fibrillation_v46.0.docx          |            3 |           20 |           35 |
-| Cervical_Screening_v46.0.docx           |            3 |           19 |           22 |
-| Non-diabetic_Hyperglycaemia_v46.0.docx  |            2 |           13 |           28 |
-| Depression_v46.0.docx                   |            2 |           11 |           13 |
-| Dementia_v46.0.docx                     |            2 |            9 |           15 |
-| Rheumatoid_Arthritis_v46.0.docx         |            2 |            7 |            9 |
-| Blood_Pressure_v46.0.docx               |            1 |            5 |            5 |
-| CKD_v46.0.docx                          |            1 |            2 |            5 |
-| Epilepsy_v46.0.docx                     |            1 |            2 |            4 |
-| PAD_v46.0.docx                          |            1 |            1 |            1 |
-| Palliative_Care_v46.0.docx              |            1 |            1 |            2 |
-| Obesity_v46.0.docx                      |            1 |            1 |            3 |
-| Learning_Disability_v46.0.docx          |            1 |            1 |            1 |
-| Osteoporosis_v46.0.docx                 |            1 |            1 |            7 |
+* **HYP_REG**: Hypertension register: Patients with an unresolved diagnosis of hypertension.
 
-## Whats in this repo?
+## Repository structure 
 
-- Code
-  - Word `.docx` parsing
-  - Jupyter example notebook with placeholders
-  - Analysis and plotting code
-- [Discussions](https://github.com/opensafely/qof-utilities/discussions)
-- [Issues](https://github.com/opensafely/qof-utilities/issues)
-- [Wiki](https://github.com/opensafely/qof-utilities/wiki)
-  - Workflow (from research template to qof research project)
-  - QOF specific code snippets for study definitions
+The following list outlines the the general steps for implementing QOF in OpenSAFELY:
 
-Multiple sets of common variables (register, demographics)
+1. Add all codelists specified in the QOF busieness rules to [codelists/codelists.txt](codelists/codelists.txt). 
+   The codelists can be found on OpenCodelists under [NHSD Primary Care Domain Refsets](https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/).
+2. Define the variables specified in the business rules in shared variable dictionaries
+3. Implement QOF registister logic in the study definition (see [here](#study-definitions))
+4. Specify measures (e.g., total achievement and breakdowns) for each indicator (see [here](#measures))
+
+### Codelists
+
+* All codelists used in this project are available in the [codelists](codelists) folder.
+
+### Variable dictionaries
+
+Variables that are shared by multiple QOF indicators are specified in dictionaries (see [OpenSAFELY programming tricks](https://docs.opensafely.org/study-def-tricks/#sharing-common-study-definition-variables)):
+* **Demographic variables**: [analysis/dict_demographic_variables.py](analysis/dict_demo_variables.py)
+* Variables to define a QOF **register** (`xxx_reg_variables`): e.g., [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py)
+
+    Almost all business rules can be broken down into individual variables that follow this strucutre: 
+    (1) a clinical codelist and a 
+    (2) timeframe, so variable names are following this  structure: `<name_of_codelist>_<time_frame>`.
+
+    TODO ADD EXAMPLE
+
+  * Where the date of the variable will also be needed, we can make use of the `include_date_*` argument. 
+    Depending on the variable description the additional arguments `find_first_match_in_period` or `find_last_match_in_period` need to be set to `True`.
+    This will include the date associated with each event to the dataframe (see [OpenSAFELY variable reference](https://docs.opensafely.org/study-def-variables/)).
+  * The variables defined in these dictionaries can then be loaded as needed in individual study defintions using `** name_of_variable_dictionary,`).
+### Study definitions
+
+* Each register (e.g., HYP_REG / HYP001) is specified in individual study definitions. 
+  Within each study definition, we can compose variables from the dictionaries using the `patients.satisfying()` function to:
+  1. Create a variable for each rule (e.g., ADD EXAMPLE), where variables for each rule number are named following this structure: `<indicator>_<register>_<rule_number>`.
+  2. These rule variables can then again be composed to create the register variables (e.g., `hyp_reg`).
+
+  Examples can be found here:
+    * **HYP001**: [analysis/study_definition_hyp001.py](analysis/study_definition_hyp001.py)
+
+* Commonly used dates (e.g., '*Payment Period Start Date*') are defined in [analysis/config.py](analysis/config.py)
+
+### Actions
+
+All actions are defined in the [project.yaml](project.yaml).
+
+* Each register has the following actions:
+  * `generate_study_population_xxx***`: Extract study population
+  * `generate_measures_xxx***`: Generate measures using the `Measure()` framework (see [OpenSAFELY documentation](https://docs.opensafely.org/measures/))
+  * `join_ethnicity_xxx`
+
+# About the OpenSAFELY framework
+
+Developers and epidemiologists interested in the framework should review [the OpenSAFELY documentation](https://docs.opensafely.org)
+The OpenSAFELY framework is a Trusted Research Environment (TRE) for electronic
+health records research in the NHS, with a focus on public accountability and
+research quality.
+Read more at [OpenSAFELY.org](https://opensafely.org).
+
+# Licences
+As standard, research projects have a MIT license. 
