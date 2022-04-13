@@ -48,12 +48,12 @@ dm_reg_variables = dict(
         """
         # Select patients from the specified population who have a diagnosis
         # of diabetes which has not been subsequently resolved.
-        (diabetes_diagnosis AND NOT diabetes_resolved 
+        (dm_diag AND NOT diabetes_resolved 
         AND age_dm_reg > 17) 
         
         OR
         
-        (diabetes_resolved_date < diabetes_diagnosis_date
+        (diabetes_resolved_date < dm_diag_date
         AND age_dm_reg > 17)
         """
     ),
