@@ -46,15 +46,15 @@ The following list describes the general structure of this repository:
   Note that the *codelists.txt* file in this repository specifies the codelists for all the registers implemented here. 
 - The codelists needed for a specific QOF register (e.g., hypertension) are loaded in [analysis/codelists_hyp.py](analysis/codelists_hyp.py).
 - The variables specified in the business rules are available in variable dictionaries (see [OpenSAFELY programming tricks](https://docs.opensafely.org/study-def-tricks/#sharing-common-study-definition-variables)) specific to each QOF register (e.g., variables for implementing the hypertension register are available here: [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py)). 
-- The logic of the QOF business rules is also composed inside the variable dictionary (e.g., variable `hyp_reg` in [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py)).
+- The logic of the QOF registers is also composed inside the variable dictionary by combining the variables created earlier using the `patients.satisfying()` function (e.g., variable `hyp_reg` in [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py)).
 - The study definition for each register makes use of the variables defined in the dictionary and defines the the population list size in the `population` variable (e.g., 6 or older for asthma, see [analysis/study_definition_ast_reg.py](analysis/study_definition_ast_reg.py)).
 
 ### Shared files across all registers
 
-- Codelists used for breakdowns of the QOF registers (e.g., ethnicity, learning disability) are loaded in [analysis/codelists_demographic.py](analysis/codelists_demographic.py)
-- Variables with demographic information (e.g., age, ethnicity) or other variables (e.g., registration status) that are the same across all registers are defined in [analysis/dict_demographic_variables.py](analysis/dict_demographic_variables.py)
-- Ethnicity is extracted in a separate study definition [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py) and joined later with each QOF register
-- Commonly used dates (e.g., '*Payment Period Start Date*') are defined in [analysis/config.py](analysis/config.py)
+- Codelists used for breakdowns of the QOF registers (e.g., ethnicity, learning disability) are loaded in [analysis/codelists_demographic.py](analysis/codelists_demographic.py).
+- Variables with demographic information (e.g., age, ethnicity) or other variables (e.g., registration status) that are the same across all registers are defined in [analysis/dict_demographic_variables.py](analysis/dict_demographic_variables.py).
+- Ethnicity is extracted in a separate study definition [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py) and joined later with each QOF register.
+- Commonly used dates (e.g., '*Payment Period Start Date*') are defined in [analysis/config.py](analysis/config.py).
 
 ## Worked example
 
