@@ -1,0 +1,31 @@
+```{r}
+library(readr)
+library(tidyverse)
+library(here)
+library(janitor)
+```
+
+```{r}
+# Load data, clean names, and selct variables
+df_qof_list_size <- read_csv(here("lib", "patient-list-size", "MAPPING_INDICATORS_2021_v2.csv")) %>% 
+    clean_names() %>% 
+    select(group_code, indicator_code, patient_list_type)
+
+# Extract ages and logic from variable `patient_list_type`
+df_qof_list_size_tidy <- df_qof_list_size %>% 
+    mutate(patient_list_type_num = str_remove(str_extract(patient_list_type, "\\d+"), "^0+"),
+           patient_list_type_txt = str_extract(patient_list_type, "[:alpha:]+"),
+           patient_list_type_wording = case_when(patient_list_type_txt == "TOTAL" ~ "Total population",
+           patient_list_type_txt == "OV" ~ paste0(patient_list_type_num, " years or over"))) %>% 
+    select(group_code, indicator_code, patient_list_type_wording)
+```
+
+```{r}
+# Create code for markdown table
+df_qof_list_size_tidy %>% 
+knitr::kable()
+```
+```{r}
+# Write csv file
+write_csv(df_qof_list_size_tidy, here("lib", "patient-list-size", "qof_patient_list_size.csv"))
+```
