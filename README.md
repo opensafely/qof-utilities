@@ -56,18 +56,27 @@ The following list describes the general structure of this repository:
 - Ethnicity is extracted in a separate study definition [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py) and joined later with each QOF register
 - Commonly used dates (e.g., '*Payment Period Start Date*') are defined in [analysis/config.py](analysis/config.py)
 
-## Use case
+## Worked example
 
-New QOF studies should start by using the [OpenSAFELY research template](https://github.com/opensafely/research-template).
-The steps outlined blow describe the general workflow:
+The steps outlined blow describe the general workflow how to use the resources in this repository for your study:
 
 1. Use the [OpenSAFELY research template](https://github.com/opensafely/research-template) to start your own QOF project
 2. Copy all register specific and shared files into your study. For example to use the Asthma register in your study you would need to add:
-     - indicator specific files: (i) [analysis/codelists_ast.py](analysis/codelists_ast.py), (ii) [analysis/dict_ast_variables.py](analysis/dict_ast_variables.py), and (iii) [analysis/study_definition_ast_reg.py](analysis/study_definition_ast_reg.py) as well as
-     - shared files: (i) [analysis/codelists_demographic.py](analysis/codelists_demographic.py), (ii) [analysis/dict_demographic_variables.py](analysis/dict_demographic_variables.py),() [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py) and joined later with each QOF register
-- Commonly used dates (e.g., '*Payment Period Start Date*') are defined in [analysis/config.py](analysis/config.py)
-
-1. actions 
+     - Asthma specific files:
+        - [analysis/codelists_ast.py](analysis/codelists_ast.py)
+        - [analysis/dict_ast_variables.py](analysis/dict_ast_variables.py)
+        - [analysis/study_definition_ast_reg.py](analysis/study_definition_ast_reg.py)
+     - Shared files:
+        - [analysis/codelists_demographic.py](analysis/codelists_demographic.py)
+        - [analysis/dict_demographic_variables.py](analysis/dict_demographic_variables.py)
+        - [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py)
+        - [analysis/config.py](analysis/config.py)
+3. Finally you need to specify the actions that are needed for the indicator you chose in the [project.yaml](project.yaml) or your project. 
+   For example, the following actions would be needed:
+     -  `generate_study_population_ast_reg`: to extract the study population for the asthma register
+     -  `generate_study_population_ethnicity`: to extract ethnicity for the asthma register population
+     -  `join_ethnicity_ast_reg`: to join ethnicity to the asthma register
+     -  `generate_measures_ast_reg`: to generate measures (here percentage acievement for the total population and breakdown by demographic variables)
 
 # About the OpenSAFELY framework
 
