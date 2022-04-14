@@ -1,0 +1,44 @@
+---
+title: "Calculate prevalence"
+output: html_document
+---
+
+```{r}
+# Load packages
+library(tidyverse)
+library(here)
+library(janitor)
+library(scales)
+library(reactable)
+```
+
+```{r}
+# Load data
+df_nhs_geo <- read_csv(here("lib", "prevalence", "MAPPING_NHS_GEOGRAPHIES_2021.csv")) %>% 
+  clean_names() %>% 
+  select(practice_code, region_name)
+
+df_qof_prevalence <- read_csv(here("lib", "prevalence", "PREVALENCE_2021_v2.csv")) %>% 
+  clean_names()
+```
+
+
+```{r}
+df_prevalence_by_region <- df_qof_prevalence %>% 
+  left_join(df_nhs_geo) %>% 
+  group_by(region_name, group_code) %>% 
+  mutate(register = sum(register),
+         list_size = sum(practice_list_size)) %>% 
+  select(group_code, region_name, register, list_size, patient_list_type) %>% 
+  distinct() %>% 
+  ungroup() %>% 
+  mutate(prevalence = scales::percent(register / list_size, accuracy = 0.01))
+```
+
+```{r}
+reactable(df_prevalence_by_region,
+          bordered = TRUE,
+          highlight = TRUE,
+          filterable = TRUE)
+```
+
