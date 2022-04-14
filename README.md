@@ -3,68 +3,71 @@
 ## Motivation
 
 The goal of this repository is to help a researcher build on the OpenSAFELY [research-template](https://github.com/opensafely/research-template) to investigate montly changes in Quality and Outcomes Framework ([QOF](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof)) registers.
-This repo contains [resources](/), [discussion](https://github.com/opensafely/qof-utilities/discussions), and [issues](https://github.com/opensafely/qof-utilities/issues) surrounding the use of OpenSAFELY to assess the impact of the pandemic on routine care through the assessment of ([QOF](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof)).
+This repo contains resources (reusable code) and more deatiled discussions around how to use and build on the code provided in this repository.
 
-New QOF studies should start by using the [OpenSAFELY research template](https://github.com/opensafely/research-template) and follow the general structure of this repository where possible, see ['Repository structure'](#repository-structure) section below.
+## Content
 
-## QOF business rules for registers
+This repo currently contains all resources for the following QOF registers:
 
-[The Quality and Outcomes Framework (QOF)](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof) outlines several indicators that focus hypertension (HYP) targets. 
-This project aims to use OpenSAFELY to quantify the extent to which any of the relevant Hypertension QOF indicators ([v46](https://digital.nhs.uk/data-and-information/data-collections-and-data-sets/data-collections/quality-and-outcomes-framework-qof/quality-and-outcome-framework-qof-business-rules/qof-business-rules-v46.0-2021-2022-baseline-release)) were disrupted during the pandemic but wont link our results to clinical outcomes.
-A short description of the QOF Hypertension ([v46](https://digital.nhs.uk/data-and-information/data-collections-and-data-sets/data-collections/quality-and-outcomes-framework-qof/quality-and-outcome-framework-qof-business-rules/qof-business-rules-v46.0-2021-2022-baseline-release)) register and each indicator is shown below:
+- Asthma (AST_REG): 
+  - Codelists: [analysis/codelists_ast.py](analysis/codelists_ast.py)
+  - Variable definitions: [analysis/dict_ast_variables.py](analysis/dict_ast_variables.py)
+  - Study definition and measures: [analysis/study_definition_ast_reg.py](analysis/study_definition_ast_reg.py)
+- Learning disability (LD_REG):
+  - Codelists: [analysis/codelists_ls.py](analysis/codelists_ls.py)
+  - Variable definitions: [analysis/dict_ls_variables.py](analysis/dict_ls_variables.py)
+  - Study definition and measures: [analysis/study_definition_ls_reg.py](analysis/study_definition_ls_reg.py)
+- Hypertension (HYP_REG):
+  - Codelists: [analysis/codelists_hyp.py](analysis/codelists_hyp.py)
+  - Variable definitions: [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py)
+  - Study definition and measures: [analysis/study_definition_hyp_reg.py](analysis/study_definition_hyp_reg.py)
+- Palliative Care (PC_REG):
+  - Codelists: [analysis/codelists_pc.py](analysis/codelists_pc.py)
+  - Variable definitions: [analysis/dict_pc_variables.py](analysis/dict_pc_variables.py)
+  - Study definition and measures: [analysis/study_definition_pc_reg.py](analysis/study_definition_pc_reg.py)
+- Diabetes (DM_REG):
+  - Codelists: [analysis/codelists_dm.py](analysis/codelists_dm.py)
+  - Variable definitions: [analysis/dict_dm_variables.py](analysis/dict_dm_variables.py)
+  - Study definition and measures: [analysis/study_definition_dm_reg.py](analysis/study_definition_dm_reg.py)
+- Stroke / TIA (STIA_REG):
+  - Codelists: [analysis/codelists_stia.py](analysis/codelists_stia.py)
+  - Variable definitions: [analysis/dict_stia_variables.py](analysis/dict_stia_variables.py)
+  - Study definition and measures: [analysis/study_definition_stia_reg.py](analysis/study_definition_stia_reg.py)
 
-* **HYP_REG**: Hypertension register: Patients with an unresolved diagnosis of hypertension.
 
 ## Repository structure 
 
-The following list outlines the the general steps for implementing QOF in OpenSAFELY:
+The following list describes the general structure of this repository:
 
-1. Add all codelists specified in the QOF busieness rules to [codelists/codelists.txt](codelists/codelists.txt). 
-   The codelists can be found on OpenCodelists under [NHSD Primary Care Domain Refsets](https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/).
-2. Define the variables specified in the business rules in shared variable dictionaries
-3. Implement QOF registister logic in the study definition (see [here](#study-definitions))
-4. Specify measures (e.g., total achievement and breakdowns) for each indicator (see [here](#measures))
+### Specific files for each register
 
-### Codelists
+- All codelists specified in the QOF busieness rules are added to [codelists/codelists.txt](codelists/codelists.txt). 
+  The codelists can be found on OpenCodelists under [NHSD Primary Care Domain Refsets](https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/).
+  Note that the *codelists.txt* file in this repository specifies the codelists for all the registers implemented here. 
+- The codelists needed for a specific QOF register (e.g., hypertension) are loaded in [analysis/codelists_hyp.py](analysis/codelists_hyp.py)
+- The variables specified in the business rules are available in shared variable dictionaries specific to each QOF register (e.g., shared variables for implementing the hypertension register are available here: [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py))
+- The logic of the QOF business rules is also composed inside the shared variable dictionary (e.g., variable `hyp_reg` in [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py))
+- The study definition for each register makes use of the variables defined in the shared dictionaries and defines the the population list size in the `population` variable (e.g., 6 or older for asthma, see [analysis/study_definition_ast_reg.py](analysis/study_definition_ast_reg.py)).
 
-* All codelists used in this project are available in the [codelists](codelists) folder.
+### Shared files across all registers
 
-### Variable dictionaries
+- Codelists used for breakdowns of the QOF registers (e.g., ethnicity, learning disability) are loaded in [analysis/codelists_demographic.py](analysis/codelists_demographic.py)
+- Variables with demographic information (e.g., age, ethnicity) or other variables (e.g., registration status) that are the same across all registers are defined in [analysis/dict_demographic_variables.py](analysis/dict_demographic_variables.py)
+- Ethnicity is extracted in a separate study definition [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py) and joined later with each QOF register
+- Commonly used dates (e.g., '*Payment Period Start Date*') are defined in [analysis/config.py](analysis/config.py)
 
-Variables that are shared by multiple QOF indicators are specified in dictionaries (see [OpenSAFELY programming tricks](https://docs.opensafely.org/study-def-tricks/#sharing-common-study-definition-variables)):
-* **Demographic variables**: [analysis/dict_demographic_variables.py](analysis/dict_demo_variables.py)
-* Variables to define a QOF **register** (`xxx_reg_variables`): e.g., [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py)
+## Use case
 
-    Almost all business rules can be broken down into individual variables that follow this strucutre: 
-    (1) a clinical codelist and a 
-    (2) timeframe, so variable names are following this  structure: `<name_of_codelist>_<time_frame>`.
+New QOF studies should start by using the [OpenSAFELY research template](https://github.com/opensafely/research-template).
+The steps outlined blow describe the general workflow:
 
-    TODO ADD EXAMPLE
+1. Use the [OpenSAFELY research template](https://github.com/opensafely/research-template) to start your own QOF project
+2. Copy all register specific and shared files into your study. For example to use the Asthma register in your study you would need to add:
+     - indicator specific files: (i) [analysis/codelists_ast.py](analysis/codelists_ast.py), (ii) [analysis/dict_ast_variables.py](analysis/dict_ast_variables.py), and (iii) [analysis/study_definition_ast_reg.py](analysis/study_definition_ast_reg.py) as well as
+     - shared files: (i) [analysis/codelists_demographic.py](analysis/codelists_demographic.py), (ii) [analysis/dict_demographic_variables.py](analysis/dict_demographic_variables.py),() [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py) and joined later with each QOF register
+- Commonly used dates (e.g., '*Payment Period Start Date*') are defined in [analysis/config.py](analysis/config.py)
 
-  * Where the date of the variable will also be needed, we can make use of the `include_date_*` argument. 
-    Depending on the variable description the additional arguments `find_first_match_in_period` or `find_last_match_in_period` need to be set to `True`.
-    This will include the date associated with each event to the dataframe (see [OpenSAFELY variable reference](https://docs.opensafely.org/study-def-variables/)).
-  * The variables defined in these dictionaries can then be loaded as needed in individual study defintions using `** name_of_variable_dictionary,`).
-### Study definitions
-
-* Each register (e.g., HYP_REG / HYP001) is specified in individual study definitions. 
-  Within each study definition, we can compose variables from the dictionaries using the `patients.satisfying()` function to:
-  1. Create a variable for each rule (e.g., ADD EXAMPLE), where variables for each rule number are named following this structure: `<indicator>_<register>_<rule_number>`.
-  2. These rule variables can then again be composed to create the register variables (e.g., `hyp_reg`).
-
-  Examples can be found here:
-    * **HYP001**: [analysis/study_definition_hyp001.py](analysis/study_definition_hyp001.py)
-
-* Commonly used dates (e.g., '*Payment Period Start Date*') are defined in [analysis/config.py](analysis/config.py)
-
-### Actions
-
-All actions are defined in the [project.yaml](project.yaml).
-
-* Each register has the following actions:
-  * `generate_study_population_xxx***`: Extract study population
-  * `generate_measures_xxx***`: Generate measures using the `Measure()` framework (see [OpenSAFELY documentation](https://docs.opensafely.org/measures/))
-  * `join_ethnicity_xxx`
+1. actions 
 
 # About the OpenSAFELY framework
 
