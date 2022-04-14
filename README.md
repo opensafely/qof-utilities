@@ -44,10 +44,10 @@ The following list describes the general structure of this repository:
 - All codelists specified in the QOF busieness rules are added to [codelists/codelists.txt](codelists/codelists.txt). 
   The codelists can be found on OpenCodelists under [NHSD Primary Care Domain Refsets](https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/).
   Note that the *codelists.txt* file in this repository specifies the codelists for all the registers implemented here. 
-- The codelists needed for a specific QOF register (e.g., hypertension) are loaded in [analysis/codelists_hyp.py](analysis/codelists_hyp.py)
-- The variables specified in the business rules are available in shared variable dictionaries specific to each QOF register (e.g., shared variables for implementing the hypertension register are available here: [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py))
-- The logic of the QOF business rules is also composed inside the shared variable dictionary (e.g., variable `hyp_reg` in [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py))
-- The study definition for each register makes use of the variables defined in the shared dictionaries and defines the the population list size in the `population` variable (e.g., 6 or older for asthma, see [analysis/study_definition_ast_reg.py](analysis/study_definition_ast_reg.py)).
+- The codelists needed for a specific QOF register (e.g., hypertension) are loaded in [analysis/codelists_hyp.py](analysis/codelists_hyp.py).
+- The variables specified in the business rules are available in variable dictionaries (see [OpenSAFELY programming tricks](https://docs.opensafely.org/study-def-tricks/#sharing-common-study-definition-variables)) specific to each QOF register (e.g., variables for implementing the hypertension register are available here: [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py)). 
+- The logic of the QOF business rules is also composed inside the variable dictionary (e.g., variable `hyp_reg` in [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py)).
+- The study definition for each register makes use of the variables defined in the dictionary and defines the the population list size in the `population` variable (e.g., 6 or older for asthma, see [analysis/study_definition_ast_reg.py](analysis/study_definition_ast_reg.py)).
 
 ### Shared files across all registers
 
