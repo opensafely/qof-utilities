@@ -1,18 +1,17 @@
 
-
 # QOF registers in OpenSAFELY
 
-## Aim
+The purpose of this repository is to provide code which replicates [QOF business rules](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof) for condition registers. This code is intended for researchers to copy and use in their own OpenSAFELY study repositories, and can be used for further analyses on monthly QOF trends and breakdowns by relevant variables. 
 
-The purpose of this repository is to provide code which replicates [QOF business rules](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof) for condition registers. This code is intended for researchers to copy and use in their own OpenSAFELY study repositories, and can be used for further analyses on monthly QOF trends and broken down by relevant variables. 
+This repo also contains [wikis](https://github.com/opensafely/qof-utilities/wiki) with documentation about how we have implemented the QOF business rules. Please feel free to contribute to it, and the [discussion](https://github.com/opensafely/qof-utilities/discussions) and raise any [issues](https://github.com/opensafely/qof-utilities/issues) - this resource is in development and we welcome all contributions to help others use it.
 
-This repo also contains [wiki’s with documentation](https://github.com/opensafely/qof-utilities/wiki) about how we have implemented the QOF business rules. Please feel free to contribute to it, and the [discussion](https://github.com/opensafely/qof-utilities/discussions) and raise any [issues](https://github.com/opensafely/qof-utilities/issues) - this resource is in development and we welcome all contributions to help others use it.
+We have designed this repo and the instructions below for people who are familiar with OpenSAFELY and who have completed the [OpenSAFELY Getting Started tutorial](https://docs.opensafely.org/getting-started/). 
 
 ## Contents of this repo
 
-This repo currently contains all resources for the QOF registers for the following clinical domains
+This repo currently contains resources for the creation of QOF registers for the following clinical domains in OpenSAFELY
 
-- Asthma (AST_REG
+- Asthma (AST_REG)
 
 - Diabetes (DM_REG)
 
@@ -24,33 +23,54 @@ This repo currently contains all resources for the QOF registers for the followi
 
 - Stroke / TIA (STIA_REG)
 
-To use this repo to replicate a register you will need to use both *specific files for that register* and *shared register files*. Details of both of these types of files can be found below. 
+To create a QOF register in your own OpenSAFELY study you will need to copy from this repo both *specific files for that register* and *shared register files*. Details of both of these types of files can be found below. 
 
-### Specific files for each register
+### Specific files needed for each register
 
-- The codelists needed for a specific QOF register (e.g., hypertension) are loaded in [analysis/codelists_hyp.py](analysis/codelists_hyp.py).
+Files specific to a register have a suffix denoting which register they relate to, for example, hypertension register files have the suffix _hyp_ or _hyp_reg_. We will use the hypertension register as an example below, for all other registers use the files with the relevant suffix.
 
-- The variables specified in the business rules are available in variable dictionaries (see [OpenSAFELY programming tricks](https://docs.opensafely.org/study-def-tricks/#sharing-common-study-definition-variables)) specific to each QOF register (e.g., variables for implementing the hypertension register are available here: [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py)). 
+- The *register specific codelist* python file needed for the QOF register (e.g., hypertension) is in the [analysis/codelists_hyp.py](analysis/codelists_hyp.py) file.
 
-- The logic of the QOF registers is also composed inside the variable dictionary by combining the variables created earlier using the `patients.satisfying()` function (e.g., variable `hyp_reg` in [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py)).
+- The QOF business rules have been coded into individual variables (such as diagnosis of hypertension) and combined into a register variable (such diagnosis of unresolved hypertension) within a *register specific variable dictionary* (see [OpenSAFELY programming tricks](https://docs.opensafely.org/study-def-tricks/#sharing-common-study-definition-variables)). You can identify the final register variable in the dictionary as it is composed by combining the individual variables using the _patients.satisfying()_ function, and has the naming convention _[condition tag]_reg_. The variable dictionary for implementing the hypertension register are here [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py)). 
 
-- The study definition for each register makes use of the variables defined in the dictionary and defines the the population list size in the `population` variable (e.g., 6 or older for asthma, see [analysis/study_definition_ast_reg.py](analysis/study_definition_ast_reg.py)).
+- The *register specific study definition* makes use of the variables defined in the register specific variable dictionary and the demographic dictionary (see below). This file defines the population list size in the _population_ variable, and generates the measures using the register specific register variable. The register specific study definition file is here [analysis/study_definition_hyp_reg.py](analysis/study_definition_hyp_reg.py)).
 
 ### Shared files across all registers
 
-*Codelists* All codelists specified in the QOF business rules have been added to the genetic[codelists/codelists.txt](codelists/codelists.txt). 
+- The *demographic and register specific codelist* text contains all codelists specified in the QOF business rules required for the conditions covered in this repo so far. The codelists can be found on OpenCodelists under [NHSD Primary Care Domain Refsets]([https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/](https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/)). The file containing all relevant codelists for QOF register studies on OpenSAFELY is here [codelists/codelists.txt](codelists/codelists.txt). 
 
-  The codelists can be found on OpenCodelists under [NHSD Primary Care Domain Refsets](https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/).
+For more information on the codelists used to define population and demographic variables, see the wiki article [‘Standard parameters and variables in QOF register studies’](https://github.com/opensafely/qof-utilities/wiki/Standard-parameters-and-variables-in-QOF-register-studies).
 
-  Note that the *codelists.txt* file in this repository specifies the codelists for all the registers implemented here. 
+- The *demographic and population breakdown codelist* python file, used for breakdowns of the QOF registers (e.g., ethnicity. learning disability) is in the [analysis/codelists_demographic.py](analysis/codelists_demographic.py) file.
 
-- Codelists used for breakdowns of the QOF registers (e.g., ethnicity, learning disability) are loaded in [analysis/codelists_demographic.py](analysis/codelists_demographic.py).
+- The *demographic and population variable dictionary* contains variables relating to demographics (e.g., age, ethnicity), specific cohorts (e.g., care home status) and other variables (e.g.,GP practice registration status). These are the same across all, more information on the codelists used can be found [here.](https://github.com/opensafely/qof-utilities/wiki/Standard-parameters-and-variables-in-QOF-register-studies) The demographic and population variable dictionary file is here [analysis/dict_demographic_variables.py](analysis/dict_demographic_variables.py).
 
-- Variables with demographic information (e.g., age, ethnicity) or other variables (e.g., registration status) that are the same across all registers are defined in [analysis/dict_demographic_variables.py](analysis/dict_demographic_variables.py).
+- Within OpenSAFELY studies ethnicity is usually extracted in a separate study definition and joined later with each QOF register. The *ethnicity study definition* can be found here [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py).
 
-- Ethnicity is extracted in a separate study definition [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py) and joined later with each QOF register.
+- The *project.yaml file for all register registers* includes actions for all condition specific registers. To use this file, you will need to copy across to your study’s project.yaml file the actions relating to your specific condition register of interest. Actions relating to specific register have a suffix with the condition tag. The actions associated with all registers are in this file [project.yaml](project.yaml)
 
-- Commonly used dates (e.g., '*Payment Period Start Date*') are defined in [analysis/config.py](analysis/config.py).
+## Using this repo
+
+To recreate the QOF register for one of the registers above follow the following steps:
+
+
+
+1. Use the [OpenSAFELY research template](https://github.com/opensafely/research-template) to start your own OpenSAFELY QOF project and add it to the wiki list of repos using this code. 
+2. Copy over the relevant register specific files
+    1. The register specific codelist
+    2. The register specific variable dictionary
+    3. The register specific study definition
+    4. The demographic and population variable dictionary
+3. Copy over the shared files for all registers (excluding the _project.yaml_ file, this is covered in the step below)
+    5. The demographic and register specific codelist
+    6. The demographic and population breakdown codelist
+    7. The demographic and population variable dictionary
+    8. The ethnicity study definition 
+4. Copy over only the actions relating to your register of interest, from the _project.yaml_ file. 
+
+## Register specific files
+
+The following list shows the condition specific files required to create a QOF register
 
 - Asthma (AST_REG): 
 
@@ -99,36 +119,6 @@ To use this repo to replicate a register you will need to use both *specific fil
   - Variable definitions: [analysis/dict_stia_variables.py](analysis/dict_stia_variables.py)
 
   - Study definition and measures: [analysis/study_definition_stia_reg.py](analysis/study_definition_stia_reg.py)
-
-## Repository structure 
-
-The following list describes the general structure of this repository:
-
-### Specific files for each register
-
-- All codelists specified in the QOF busieness rules are added to [codelists/codelists.txt](codelists/codelists.txt). 
-
-  The codelists can be found on OpenCodelists under [NHSD Primary Care Domain Refsets](https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/).
-
-  Note that the *codelists.txt* file in this repository specifies the codelists for all the registers implemented here. 
-
-- The codelists needed for a specific QOF register (e.g., hypertension) are loaded in [analysis/codelists_hyp.py](analysis/codelists_hyp.py).
-
-- The variables specified in the business rules are available in variable dictionaries (see [OpenSAFELY programming tricks](https://docs.opensafely.org/study-def-tricks/#sharing-common-study-definition-variables)) specific to each QOF register (e.g., variables for implementing the hypertension register are available here: [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py)). 
-
-- The logic of the QOF registers is also composed inside the variable dictionary by combining the variables created earlier using the `patients.satisfying()` function (e.g., variable `hyp_reg` in [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py)).
-
-- The study definition for each register makes use of the variables defined in the dictionary and defines the the population list size in the `population` variable (e.g., 6 or older for asthma, see [analysis/study_definition_ast_reg.py](analysis/study_definition_ast_reg.py)).
-
-### Shared files across all registers
-
-- Codelists used for breakdowns of the QOF registers (e.g., ethnicity, learning disability) are loaded in [analysis/codelists_demographic.py](analysis/codelists_demographic.py).
-
-- Variables with demographic information (e.g., age, ethnicity) or other variables (e.g., registration status) that are the same across all registers are defined in [analysis/dict_demographic_variables.py](analysis/dict_demographic_variables.py).
-
-- Ethnicity is extracted in a separate study definition [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py) and joined later with each QOF register.
-
-- Commonly used dates (e.g., '*Payment Period Start Date*') are defined in [analysis/config.py](analysis/config.py).
 
 ## Worked example
 
