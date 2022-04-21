@@ -57,22 +57,42 @@ To recreate the QOF register for one of the registers above follow the following
 
 1. Use the [OpenSAFELY research template](https://github.com/opensafely/research-template) to start your own OpenSAFELY QOF project and add it to the wiki list of repos using this code. 
 2. Copy over the relevant register specific files
-    1. The register specific codelist
-    2. The register specific variable dictionary
-    3. The register specific study definition
-    4. The demographic and population variable dictionary
+
+- The register specific codelist python file
+
+- The register specific variable dictionary
+
+- The register specific study definition
+
+
+
 3. Copy over the shared files for all registers (excluding the _project.yaml_ file, this is covered in the step below)
-    5. The demographic and register specific codelist
-    6. The demographic and population breakdown codelist
-    7. The demographic and population variable dictionary
-    8. The ethnicity study definition 
-4. Copy over only the actions relating to your register of interest, from the _project.yaml_ file. 
+
+- The demographic and register specific codelist text file
+
+- The demographic and population breakdown codelist python file
+
+- The demographic and population variable dictionary
+
+- The ethnicity study definition 
+
+
+
+4. Copy over only the actions relating to your register of interest, from the _project.yaml_ file into the _project.yaml_ file in your research repo. These consist of: 
+
+_- generate_study_population_[XXX]_reg_
+
+_- generate_study_population_ethnicity_
+
+
+
+5. If relevant to your analysis, adjust the _config.py_ file and the _project.yaml_ file in your repo to cover the time period and level of return of interest. For analyses looking at trends in register prevalence before and during the pandemic we would recommend a start date of 1/03/2022 and the latest month as the end date. In the _project.yaml_ file, this will be written in the _generate_study_population_[XXX]_reg_ action (which creates the register) as ‘--index-date-range "2021-04-01 to 2022-03-01 by month" ‘.
 
 ## Register specific files
 
 The following list shows the condition specific files required to create a QOF register
 
-- Asthma (AST_REG): 
+- Asthma (AST_REG)
 
   - Codelists: [analysis/codelists_ast.py](analysis/codelists_ast.py)
 
@@ -80,7 +100,7 @@ The following list shows the condition specific files required to create a QOF r
 
   - Study definition and measures: [analysis/study_definition_ast_reg.py](analysis/study_definition_ast_reg.py)
 
-- Learning disability (LD_REG):
+- Learning disability (LD_REG)
 
   - Codelists: [analysis/codelists_ls.py](analysis/codelists_ls.py)
 
@@ -88,7 +108,7 @@ The following list shows the condition specific files required to create a QOF r
 
   - Study definition and measures: [analysis/study_definition_ls_reg.py](analysis/study_definition_ls_reg.py)
 
-- Hypertension (HYP_REG):
+- Hypertension (HYP_REG)
 
   - Codelists: [analysis/codelists_hyp.py](analysis/codelists_hyp.py)
 
@@ -96,7 +116,7 @@ The following list shows the condition specific files required to create a QOF r
 
   - Study definition and measures: [analysis/study_definition_hyp_reg.py](analysis/study_definition_hyp_reg.py)
 
-- Palliative Care (PC_REG):
+- Palliative Care (PC_REG)
 
   - Codelists: [analysis/codelists_pc.py](analysis/codelists_pc.py)
 
@@ -104,7 +124,7 @@ The following list shows the condition specific files required to create a QOF r
 
   - Study definition and measures: [analysis/study_definition_pc_reg.py](analysis/study_definition_pc_reg.py)
 
-- Diabetes (DM_REG):
+- Diabetes (DM_REG)
 
   - Codelists: [analysis/codelists_dm.py](analysis/codelists_dm.py)
 
@@ -112,7 +132,7 @@ The following list shows the condition specific files required to create a QOF r
 
   - Study definition and measures: [analysis/study_definition_dm_reg.py](analysis/study_definition_dm_reg.py)
 
-- Stroke / TIA (STIA_REG):
+- Stroke / TIA (STIA_REG)
 
   - Codelists: [analysis/codelists_stia.py](analysis/codelists_stia.py)
 
@@ -122,11 +142,11 @@ The following list shows the condition specific files required to create a QOF r
 
 ## Worked example
 
-The steps outlined blow describe the general workflow how to use the resources in this repository for your study:
+The steps outlined below describe the workflow for one example register, asthma, on how to use the resources in this repository for your study:
 
-1. Use the [OpenSAFELY research template](https://github.com/opensafely/research-template) to start your own QOF project
+1. Use the [OpenSAFELY research template](https://github.com/opensafely/research-template) to start your own QOF project and add it to the wiki list of repos using this code. 
 
-2. Copy all register specific and shared files into your study. For example to use the Asthma register in your study you would need to add:
+2. Copy all asthma register specific
 
      - Asthma specific files:
 
@@ -136,7 +156,11 @@ The steps outlined blow describe the general workflow how to use the resources i
 
         - [analysis/study_definition_ast_reg.py](analysis/study_definition_ast_reg.py)
 
+3. Copy over the shared files (excluding _project.yaml_ actions)
+
      - Shared files:
+
+        - [codelists/codelists.txt](codelists/codelists.txt)
 
         - [analysis/codelists_demographic.py](analysis/codelists_demographic.py)
 
@@ -144,19 +168,17 @@ The steps outlined blow describe the general workflow how to use the resources i
 
         - [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py)
 
-        - [analysis/config.py](analysis/config.py)
+3. Finally you need to specify the actions that are needed for the asthma register in the [project.yaml](project.yaml) for your project. 
 
-3. Finally you need to specify the actions that are needed for the indicator you chose in the [project.yaml](project.yaml) or your project. 
+   For example, asthma actions required to create the register:
 
-   For example, the following actions would be needed:
+     -  _generate_study_population_ast_reg_: to extract the study population for the asthma register
 
-     -  `generate_study_population_ast_reg`: to extract the study population for the asthma register
+     -  _generate_study_population_ethnicity_: to extract ethnicity for the asthma register population (Note - this action is not register specific and is required for all registers)
 
-     -  `generate_study_population_ethnicity`: to extract ethnicity for the asthma register population
+     -  _join_ethnicity_ast_reg_: to join ethnicity to the asthma register
 
-     -  `join_ethnicity_ast_reg`: to join ethnicity to the asthma register
-
-     -  `generate_measures_ast_reg`: to generate measures (here percentage acievement for the total population and breakdown by demographic variables)
+     -  _generate_measures_ast_reg_: to generate measures (percentage prevalence for the total population and breakdown by demographic variables)
 
 # About the OpenSAFELY framework
 
