@@ -9,7 +9,7 @@ We have designed this repo and the instructions below for people who are familia
 
 ## Contents of this repo
 
-This repo currently contains resources for the creation of QOF registers for the following clinical domains in OpenSAFELY:
+This repo currently contains resources for the creation of QOF registers (Version 46) for the following clinical domains in OpenSAFELY:
 
 - Asthma (AST_REG)
 - Diabetes (DM_REG)
