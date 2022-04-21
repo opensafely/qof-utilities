@@ -91,16 +91,16 @@ The steps outlined below describe the workflow for one example register, asthma,
 
 ## Overview of register specific files
 
-The following table shows the condition specific files required to create a QOF register.
+The following table shows the condition specific files (available in the [`analysis/`](/analysis) folder) required to create a QOF register.
 
 | Register | Codelists | Variable dictionary | Study definition |
 | -------- | --------- | ------------------- | ---------------- |
-| Asthma (AST_REG) | [analysis/codelists_ast.py](analysis/codelists_ast.py) | [analysis/dict_ast_variables.py](analysis/dict_ast_variables.py) | [analysis/study_definition_ast_reg.py](analysis/study_definition_ast_reg.py) |
-| Learning disability (LD_REG) | [analysis/codelists_ld.py](analysis/codelists_ld.py) | [analysis/dict_ld_variables.py](analysis/dict_ld_variables.py) | [analysis/study_definition_ld_reg.py](analysis/study_definition_ld_reg.py) |
-| Hypertension (HYP_REG) | [analysis/codelists_hyp.py](analysis/codelists_hyp.py) | [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py) | [analysis/study_definition_hyp_reg.py](analysis/study_definition_hyp_reg.py) |
-| Palliative Care (PC_REG) | [analysis/codelists_pc.py](analysis/codelists_pc.py) | [analysis/dict_pc_variables.py](analysis/dict_pc_variables.py) | [analysis/study_definition_pc_reg.py](analysis/study_definition_pc_reg.py) |
-| Diabetes (DM_REG) | [analysis/codelists_dm.py](analysis/codelists_dm.py) | [analysis/dict_dm_variables.py](analysis/dict_dm_variables.py) | [analysis/study_definition_dm_reg.py](analysis/study_definition_dm_reg.py) |
-| Stroke / TIA (STIA_REG) | [analysis/codelists_stia.py](analysis/codelists_stia.py) | [analysis/dict_stia_variables.py](analysis/dict_stia_variables.py) | [analysis/study_definition_stia_reg.py](analysis/study_definition_stia_reg.py) |
+| Asthma (AST_REG) | [codelists_ast.py](analysis/codelists_ast.py) | [dict_ast_variables.py](analysis/dict_ast_variables.py) | [study_definition_ast_reg.py](analysis/study_definition_ast_reg.py) |
+| Learning disability (LD_REG) | [codelists_ld.py](analysis/codelists_ld.py) | [dict_ld_variables.py](analysis/dict_ld_variables.py) | [study_definition_ld_reg.py](analysis/study_definition_ld_reg.py) |
+| Hypertension (HYP_REG) | [codelists_hyp.py](analysis/codelists_hyp.py) | [dict_hyp_variables.py](analysis/dict_hyp_variables.py) | [study_definition_hyp_reg.py](analysis/study_definition_hyp_reg.py) |
+| Palliative Care (PC_REG) | [codelists_pc.py](analysis/codelists_pc.py) | [dict_pc_variables.py](analysis/dict_pc_variables.py) | [study_definition_pc_reg.py](analysis/study_definition_pc_reg.py) |
+| Diabetes (DM_REG) | [codelists_dm.py](analysis/codelists_dm.py) | [dict_dm_variables.py](analysis/dict_dm_variables.py) | [study_definition_dm_reg.py](analysis/study_definition_dm_reg.py) |
+| Stroke / TIA (STIA_REG) | [codelists_stia.py](analysis/codelists_stia.py) | [dict_stia_variables.py](analysis/dict_stia_variables.py) | [study_definition_stia_reg.py](analysis/study_definition_stia_reg.py) |
 
 # About the OpenSAFELY framework
 
