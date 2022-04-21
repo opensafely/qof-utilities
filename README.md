@@ -29,33 +29,33 @@ To create a QOF register in your own OpenSAFELY study you will need to copy from
 
 Files specific to a register have a suffix denoting which register they relate to, for example, hypertension register files have the suffix _hyp_ or _hyp_reg_. We will use the hypertension register as an example below, for all other registers use the files with the relevant suffix.
 
-- The *register specific codelist* python file needed for the QOF register (e.g., hypertension) is in the [analysis/codelists_hyp.py](analysis/codelists_hyp.py) file.
+- The **register specific codelist** python file needed for the QOF register (e.g., hypertension) is in the [analysis/codelists_hyp.py](analysis/codelists_hyp.py) file.
 
-- The QOF business rules have been coded into individual variables (such as diagnosis of hypertension) and combined into a register variable (such diagnosis of unresolved hypertension) within a *register specific variable dictionary* (see [OpenSAFELY programming tricks](https://docs.opensafely.org/study-def-tricks/#sharing-common-study-definition-variables)). You can identify the final register variable in the dictionary as it is composed by combining the individual variables using the _patients.satisfying()_ function, and has the naming convention _[condition tag]_reg_. The variable dictionary for implementing the hypertension register are here [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py)). 
+- The QOF business rules have been coded into individual variables (such as diagnosis of hypertension) and combined into a register variable (such diagnosis of unresolved hypertension) within a **register specific variable dictionary** (see [OpenSAFELY programming tricks](https://docs.opensafely.org/study-def-tricks/#sharing-common-study-definition-variables). You can identify the complete register variable in the dictionary as it is composed by combining the individual variables using the _patients.satisfying()_ function, and has the naming convention _conditiontag_reg_. The variable dictionary for implementing the hypertension register are here [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py). 
 
-- The *register specific study definition* makes use of the variables defined in the register specific variable dictionary and the demographic dictionary (see below). This file defines the population list size in the _population_ variable, and generates the measures using the register specific register variable. The register specific study definition file is here [analysis/study_definition_hyp_reg.py](analysis/study_definition_hyp_reg.py)).
+- The **register specific study definition** makes use of the variables defined in the register specific variable dictionary and the demographic dictionary (see below). This file defines the population list size in the _population_ variable, and generates the measures using the register specific register variables. The register specific study definition file is here [analysis/study_definition_hyp_reg.py](analysis/study_definition_hyp_reg.py).
 
 ### Shared files across all registers
 
-- The *demographic and register specific codelist* text contains all codelists specified in the QOF business rules required for the conditions covered in this repo so far. The codelists can be found on OpenCodelists under [NHSD Primary Care Domain Refsets]([https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/](https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/)). The file containing all relevant codelists for QOF register studies on OpenSAFELY is here [codelists/codelists.txt](codelists/codelists.txt). 
+- The **demographic and register specific codelist** text contains all codelists specified in the QOF business rules required for the conditions covered in this repo so far. The codelists can be found on OpenCodelists under [NHSD Primary Care Domain Refsets]([https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/](https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/). The file containing all relevant codelists for QOF register studies on OpenSAFELY is here [codelists/codelists.txt](codelists/codelists.txt). 
 
-For more information on the codelists used to define population and demographic variables, see the wiki article [‘Standard parameters and variables in QOF register studies’](https://github.com/opensafely/qof-utilities/wiki/Standard-parameters-and-variables-in-QOF-register-studies).
+  For more information on the codelists used to define population and demographic variables, see the wiki article [Standard parameters and variables in QOF register studies](https://github.com/opensafely/qof-utilities/wiki/Standard-parameters-and-variables-in-QOF-register-studies).
 
-- The *demographic and population breakdown codelist* python file, used for breakdowns of the QOF registers (e.g., ethnicity. learning disability) is in the [analysis/codelists_demographic.py](analysis/codelists_demographic.py) file.
+- The **demographic and population breakdown codelist** python file, used for breakdowns of the QOF registers (e.g., ethnicity, learning disability) is in the [analysis/codelists_demographic.py](analysis/codelists_demographic.py) file.
 
-- The *demographic and population variable dictionary* contains variables relating to demographics (e.g., age, ethnicity), specific cohorts (e.g., care home status) and other variables (e.g.,GP practice registration status). These are the same across all, more information on the codelists used can be found [here.](https://github.com/opensafely/qof-utilities/wiki/Standard-parameters-and-variables-in-QOF-register-studies) The demographic and population variable dictionary file is here [analysis/dict_demographic_variables.py](analysis/dict_demographic_variables.py).
+- The **demographic and population variable dictionary** contains variables relating to demographics (e.g., age, ethnicity), specific cohorts (e.g., care home status) and other variables (e.g.,GP practice registration status). These are the same across all registers, more information on the codelists used for these variables can be found [here.](https://github.com/opensafely/qof-utilities/wiki/Standard-parameters-and-variables-in-QOF-register-studies) The demographic and population variable dictionary file is here [analysis/dict_demographic_variables.py](analysis/dict_demographic_variables.py).
 
-- Within OpenSAFELY studies ethnicity is usually extracted in a separate study definition and joined later with each QOF register. The *ethnicity study definition* can be found here [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py).
+- Within OpenSAFELY studies ethnicity is usually extracted in a separate study definition and joined later with each QOF register. The **ethnicity study definition** can be found here [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py).
 
-- The *project.yaml file for all register registers* includes actions for all condition specific registers. To use this file, you will need to copy across to your study’s project.yaml file the actions relating to your specific condition register of interest. Actions relating to specific register have a suffix with the condition tag. The actions associated with all registers are in this file [project.yaml](project.yaml)
+- The **project.yaml file for all register registers** includes actions for all condition specific registers. To use this file, you will need to copy across to your study’s project.yaml file the actions relating to your specific condition register. Actions relating to a specific register have a suffix with the condition tag. The actions associated with all registers are in this file [project.yaml](project.yaml).
 
 ## Using this repo
 
-To recreate the QOF register for one of the registers above follow the following steps:
+To recreate the QOF register for one of the registers above follow the steps below:
 
 
 
-1. Use the [OpenSAFELY research template](https://github.com/opensafely/research-template) to start your own OpenSAFELY QOF project and add it to the wiki list of repos using this code. 
+1. Use the [OpenSAFELY research template](https://github.com/opensafely/research-template) to start your own OpenSAFELY QOF project and add it to the wiki [list](https://github.com/opensafely/qof-utilities/wiki) of repos using this code. 
 2. Copy over the relevant register specific files
 
 - The register specific codelist python file
@@ -80,11 +80,13 @@ To recreate the QOF register for one of the registers above follow the following
 
 4. Copy over only the actions relating to your register of interest, from the _project.yaml_ file into the _project.yaml_ file in your research repo. These consist of: 
 
-_- generate_study_population_[XXX]_reg_
+- _generate_study_population_conditiontag_reg_
 
-_- generate_study_population_ethnicity_
+- _generate_study_population_ethnicity_
 
+- _join_ethnicity_conditiontag_
 
+- _generate_measures_conditiontag_reg_
 
 5. If relevant to your analysis, adjust the _config.py_ file and the _project.yaml_ file in your repo to cover the time period and level of return of interest. For analyses looking at trends in register prevalence before and during the pandemic we would recommend a start date of 1/03/2022 and the latest month as the end date. In the _project.yaml_ file, this will be written in the _generate_study_population_[XXX]_reg_ action (which creates the register) as ‘--index-date-range "2021-04-01 to 2022-03-01 by month" ‘.
 
@@ -102,11 +104,11 @@ The following list shows the condition specific files required to create a QOF r
 
 - Learning disability (LD_REG)
 
-  - Codelists: [analysis/codelists_ls.py](analysis/codelists_ls.py)
+  - Codelists: [analysis/codelists_ld.py](analysis/codelists_ld.py)
 
-  - Variable definitions: [analysis/dict_ls_variables.py](analysis/dict_ls_variables.py)
+  - Variable definitions: [analysis/dict_ld_variables.py](analysis/dict_ld_variables.py)
 
-  - Study definition and measures: [analysis/study_definition_ls_reg.py](analysis/study_definition_ls_reg.py)
+  - Study definition and measures: [analysis/study_definition_ld_reg.py](analysis/study_definition_ld_reg.py)
 
 - Hypertension (HYP_REG)
 
@@ -182,13 +184,9 @@ The steps outlined below describe the workflow for one example register, asthma,
 
 # About the OpenSAFELY framework
 
-Developers and epidemiologists interested in the framework should review [the OpenSAFELY documentation](https://docs.opensafely.org)
+Developers and epidemiologists interested in the framework should review [the OpenSAFELY documentation](https://docs.opensafely.org). 
 
-The OpenSAFELY framework is a Trusted Research Environment (TRE) for electronic
-
-health records research in the NHS, with a focus on public accountability and
-
-research quality.
+The OpenSAFELY framework is a Trusted Research Environment (TRE) for electronic health records research in the NHS, with a focus on public accountability and research quality.
 
 Read more at [OpenSAFELY.org](https://opensafely.org).
 
