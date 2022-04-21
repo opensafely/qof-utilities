@@ -10,12 +10,11 @@ actions:
     run: > 
       cohortextractor:latest generate_cohort 
       --study-definition study_definition_ethnicity 
-      --index-date-range "2021-04-01 to 2022-03-01 by month" 
       --output-dir=output
       --output-format=csv
     outputs:
       highly_sensitive:
-        cohort: output/input_ethnicity*.csv
+        cohort: output/input_ethnicity.csv
 
   # Hypertension Register
   generate_study_population_hyp_reg:
@@ -33,7 +32,7 @@ actions:
     run: >
       cohort-joiner:v0.0.12 
         --lhs output/input_hyp*.csv
-        --rhs output/input_ethnicity*.csv
+        --rhs output/input_ethnicity.csv
         --output-dir output/joined
     needs: [generate_study_population_ethnicity, generate_study_population_hyp_reg]
     outputs:
@@ -66,7 +65,7 @@ actions:
     run: >
       cohort-joiner:v0.0.12 
         --lhs output/input_ld*.csv
-        --rhs output/input_ethnicity*.csv
+        --rhs output/input_ethnicity.csv
         --output-dir output/joined
     needs: [generate_study_population_ethnicity, generate_study_population_ld_reg]
     outputs:
@@ -99,7 +98,7 @@ actions:
     run: >
       cohort-joiner:v0.0.12 
         --lhs output/input_pc*.csv
-        --rhs output/input_ethnicity*.csv
+        --rhs output/input_ethnicity.csv
         --output-dir output/joined
     needs: [generate_study_population_ethnicity, generate_study_population_pc_reg]
     outputs:
@@ -132,7 +131,7 @@ actions:
     run: >
       cohort-joiner:v0.0.12 
         --lhs output/input_stia*.csv
-        --rhs output/input_ethnicity*.csv
+        --rhs output/input_ethnicity.csv
         --output-dir output/joined
     needs: [generate_study_population_ethnicity, generate_study_population_stia_reg]
     outputs:
@@ -165,7 +164,7 @@ actions:
     run: >
       cohort-joiner:v0.0.12 
         --lhs output/input_ast*.csv
-        --rhs output/input_ethnicity*.csv
+        --rhs output/input_ethnicity.csv
         --output-dir output/joined
     needs: [generate_study_population_ethnicity, generate_study_population_ast_reg]
     outputs:
@@ -198,7 +197,7 @@ actions:
     run: >
       cohort-joiner:v0.0.12 
         --lhs output/input_dm*.csv
-        --rhs output/input_ethnicity*.csv
+        --rhs output/input_ethnicity.csv
         --output-dir output/joined
     needs: [generate_study_population_ethnicity, generate_study_population_dm_reg]
     outputs:
