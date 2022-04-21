@@ -53,7 +53,10 @@ hyp_reg_variables = dict(
         # Select patients from the specified population who have a diagnosis
         # of hypertension which has not been subsequently resolved.
         (hyp AND (NOT hyp_res)) OR
-        (hyp_res_date <= hyp_date)
+        (
+            (hyp AND hyp_res) AND
+            (hyp_res_date <= hyp_date)
+        )
         """
     ),
 )
