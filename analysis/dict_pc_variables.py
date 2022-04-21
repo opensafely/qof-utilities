@@ -46,7 +46,11 @@ pc_reg_variables = dict(
         # Palliative Care register:
         # Patients who have been identified as requiring palliative care
         (pal_care AND (NOT pal_care_ni)) OR
-        (pal_care_ni_date <= pal_care_date)
+        (
+            (pal_care AND pal_care_ni) AND
+            (pal_care_ni_date <= pal_care_date)
+        )
+
         """
     ),
 )
