@@ -5,6 +5,7 @@ The purpose of this repository is to provide code which replicates [QOF business
 This code is intended for researchers to copy and use in their own OpenSAFELY study repositories, and can be used for further analyses on monthly QOF trends and breakdowns by relevant variables. 
 This repo also contains [wikis](https://github.com/opensafely/qof-utilities/wiki) with documentation about how we have implemented the QOF business rules.
 Please feel free to contribute to it, and the [discussion](https://github.com/opensafely/qof-utilities/discussions) and raise any [issues](https://github.com/opensafely/qof-utilities/issues) - this resource is in development and we welcome all contributions to help others use it.
+
 We have designed this repo and the instructions below for people who are familiar with OpenSAFELY and who have completed the [OpenSAFELY Getting Started tutorial](https://docs.opensafely.org/getting-started/). 
 
 ## Contents of this repo
