@@ -3,6 +3,7 @@
 
 The purpose of this repository is to provide code which replicates [QOF business rules](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof) for condition registers.
 This code is intended for researchers to copy and use in their own OpenSAFELY study repositories, and can be used for further analyses on monthly QOF trends and breakdowns by relevant variables. 
+
 This repo also contains [wikis](https://github.com/opensafely/qof-utilities/wiki) with documentation about how we have implemented the QOF business rules.
 Please feel free to contribute to it, and the [discussion](https://github.com/opensafely/qof-utilities/discussions) and raise any [issues](https://github.com/opensafely/qof-utilities/issues) - this resource is in development and we welcome all contributions to help others use it.
 
@@ -34,12 +35,15 @@ We will use the hypertension register as an example below, for all other registe
 
 ### Shared files across all registers
 
-- The **demographic and register specific codelist** text contains all codelists specified in the QOF business rules required for the conditions covered in this repo so far.
-  Note that if you are only working on one register, some codelists in this some of these file may not be relevant for your study and could be deleted. 
-  For example, the hypertension invitation codes if you are only working with the asthma register.
-  The codelists can be found on OpenCodelists under [NHSD Primary Care Domain Refsets](https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/). 
-  The file containing all relevant codelists for QOF register studies on OpenSAFELY is here [codelists/codelists.txt](codelists/codelists.txt). 
-  For more information on the codelists used to define population and demographic variables, see the wiki article [Standard parameters and variables in QOF register studies](https://github.com/opensafely/qof-utilities/wiki/Standard-parameters-and-variables-in-QOF-register-studies).
+- The **demographic and register specific codelist text file** contains all codelists specified in the QOF business rules required for the conditions covered in this repo so far.
+  Note that if you are only working on one register, some codelists in this file may not be relevant for your study and could be deleted, although the study will work without removing irrelevant codelists. 
+  For example, you could remove the hypertension invitation codes if you are only working with the asthma register.
+
+
+  The codelist text file containing all relevant codelists for QOF register studies on OpenSAFELY is here [codelists/codelists.txt](codelists/codelists.txt). 
+  
+  
+  For more information on the codelists used to define population and demographic variables, see the wiki article [Standard parameters and variables in QOF register studies](https://github.com/opensafely/qof-utilities/wiki/Standard-parameters-and-variables-in-QOF-register-studies). Also, all codelists used can be found on OpenCodelists here [NHSD Primary Care Domain Refsets](https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/). 
 - The **demographic and population breakdown codelist python file**, used for breakdowns of the QOF registers (e.g., ethnicity, learning disability) is in the [analysis/codelists_demographic.py](analysis/codelists_demographic.py) file.
 - The **demographic and population variable dictionary** contains variables relating to demographics (e.g., age, ethnicity), specific cohorts (e.g., care home status) and other variables (e.g.,GP practice registration status).
   These are the same across all registers, more information on the codelists used for these variables can be found [here.](https://github.com/opensafely/qof-utilities/wiki/Standard-parameters-and-variables-in-QOF-register-studies) The demographic and population variable dictionary file is here [analysis/dict_demographic_variables.py](analysis/dict_demographic_variables.py).
