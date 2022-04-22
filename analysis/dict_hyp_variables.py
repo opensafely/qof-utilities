@@ -25,7 +25,7 @@ hyp_reg_variables = dict(
         date_format="YYYY-MM-DD",
     ),
     # Note that this is the same variable description as:
-    # HYP_DAT (hypertension_date): Date of the first hypertension
+    # HYP_DAT: Date of the first hypertension
     # diagnosis up to and including the achievement date.
     hyp=patients.with_these_clinical_events(
         on_or_before="last_day_of_month(index_date)",
@@ -55,7 +55,7 @@ hyp_reg_variables = dict(
         (hyp AND (NOT hyp_res)) OR
         (
             (hyp AND hyp_res) AND
-            (hyp_res_date <= hyp_date)
+            (hyp_res_date <= hyp_lat_date)
         )
         """
     ),
