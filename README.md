@@ -26,12 +26,17 @@ Files specific to a register have a suffix denoting which register they relate t
 We will use the hypertension register as an example below, for all other registers use the files with the relevant suffix.
 
 - The **register specific codelist** python file needed for the QOF register (e.g., hypertension) is in the [analysis/codelists_hyp.py](analysis/codelists_hyp.py) file.
-- The QOF business rules have been coded into individual variables (such as diagnosis of hypertension) and combined into a register variable (such diagnosis of unresolved hypertension) within a **register specific variable dictionary** (see [OpenSAFELY programming tricks](https://docs.opensafely.org/study-def-tricks/#sharing-common-study-definition-variables). You can identify the complete register variable in the dictionary as it is composed by combining the individual variables using the _patients.satisfying()_ function, and has the naming convention `<condition_tag>_reg`. The variable dictionary for implementing the hypertension register are here [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py). 
+- The QOF business rules have been coded into individual variables (such as diagnosis of hypertension) and combined into a register variable (such diagnosis of unresolved hypertension) within a **register specific variable dictionary** (see [OpenSAFELY programming tricks](https://docs.opensafely.org/study-def-tricks/#sharing-common-study-definition-variables)). 
+  You can identify the complete register variable in the dictionary as it is composed by combining the individual variables using the _patients.satisfying()_ function, and has the naming convention `<condition_tag>_reg`. 
+  The variable dictionary for implementing the hypertension register is here [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py). 
 - The **register specific study definition** makes use of the variables defined in the register specific variable dictionary and the demographic dictionary (see below). This file defines the population list size in the _population_ variable, and generates the measures using the register specific register variables. The register specific study definition file is here [analysis/study_definition_hyp_reg.py](analysis/study_definition_hyp_reg.py).
 
 ### Shared files across all registers
 
-- The **demographic and register specific codelist** text contains all codelists specified in the QOF business rules required for the conditions covered in this repo so far. The codelists can be found on OpenCodelists under [NHSD Primary Care Domain Refsets](https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/). 
+- The **demographic and register specific codelist** text contains all codelists specified in the QOF business rules required for the conditions covered in this repo so far.
+  Note that if you are only working on one register, some codelists in this some of these file may not be relevant for your study and could be deleted. 
+  For example, the hypertension invitation codes if you are only working with the asthma register.
+  The codelists can be found on OpenCodelists under [NHSD Primary Care Domain Refsets](https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/). 
   The file containing all relevant codelists for QOF register studies on OpenSAFELY is here [codelists/codelists.txt](codelists/codelists.txt). 
   For more information on the codelists used to define population and demographic variables, see the wiki article [Standard parameters and variables in QOF register studies](https://github.com/opensafely/qof-utilities/wiki/Standard-parameters-and-variables-in-QOF-register-studies).
 - The **demographic and population breakdown codelist** python file, used for breakdowns of the QOF registers (e.g., ethnicity, learning disability) is in the [analysis/codelists_demographic.py](analysis/codelists_demographic.py) file.
