@@ -48,21 +48,22 @@ We will use the hypertension register as an example below, for all other registe
 - The **demographic and population variable dictionary** contains variables relating to demographics (e.g., age, ethnicity), specific cohorts (e.g., care home status) and other variables (e.g.,GP practice registration status).
    The demographic and population variable dictionary file is here [analysis/dict_demographic_variables.py](analysis/dict_demographic_variables.py).
 
-   These are the same across all registers, more information on the codelists used for these variables can be found [here.](https://github.com/opensafely/qof-utilities/wiki/Standard-parameters-and-variables-in-QOF-register-studies)
-   
+   These variables are the same across all registers, more information on the codelists used can be found [here.](https://github.com/opensafely/qof-utilities/wiki/Standard-parameters-and-variables-in-QOF-register-studies)
+
 - Within OpenSAFELY studies ethnicity is usually extracted in a separate study definition and joined later with each QOF register.
   The **ethnicity study definition** can be found here [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py).
-- The **project.yaml file for all register registers** includes actions for all condition specific registers.
-  To use this file, you will need to copy across to your study’s *project.yaml* file the actions relating to your specific condition register.
-  If you are only working on one clinical area, you do not need to copy over the actions related to the other clinical areas.
-  Actions relating to a specific register have a suffix with the condition tag.
-  The actions associated with all registers are in this file [project.yaml](project.yaml).
-  Note that it is stronly encouraged to use a compressed file format (*.csv.gz* or *.feather*) when running your study on the server. 
+- The **project.yaml file for all registers** includes actions for all condition specific registers.
+
+  To use this file, you will need to copy across to your study’s *project.yaml* file the actions relating to your specific condition register.The actions associated with all registers are in this file [project.yaml](project.yaml).
+
+  If you are only working on one clinical area, you do not need to copy over the actions related to the other clinical areas. Actions relating to a specific register can be identified by a suffix with the relevant condition tag.
+  
+  Note that it is strongly encouraged to use a compressed file format (*.csv.gz* or *.feather*) when running your study on the server. 
   For more details how to change the file format see the OpenSAFELY documentation [here](https://docs.opensafely.org/measures/#calculate-the-measures).
 
 ## How to use this repo
 
-To recreate the QOF register for one of the registers above follow the steps below:
+To recreate the QOF register for one of the clinical domains above follow the steps below:
 
 1. Use the [OpenSAFELY research template](https://github.com/opensafely/research-template) to start your own OpenSAFELY QOF project and add it to the wiki [list](https://github.com/opensafely/qof-utilities/wiki) of repos using this code. 
 2. Copy over the relevant register specific files from the [analysis/](analysis/) folder:
@@ -81,8 +82,8 @@ To recreate the QOF register for one of the registers above follow the steps bel
    - `join_ethnicity_<condition_tag>`
    - `generate_measures_<condition_tag>_reg`
 5. If relevant to your analysis, adjust the _config.py_ file and the _project.yaml_ file in your repo to cover the time period and level of return of interest. 
-   For analyses looking at trends in register prevalence before and during the pandemic we would recommend a start date of 1/03/2022 and the latest month as the end date.
-   In the _project.yaml_ file, this will be written in the `generate_study_population_<condition_tag>_reg` action (which creates the register) as `--index-date-range "2021-04-01 to 2022-03-01 by month"`.
+   For analyses looking at trends in register prevalence before and during the pandemic we would recommend a start date of 2019/03/01 and the latest month as the end date.
+   In the _project.yaml_ file, this will be written in the `generate_study_population_<condition_tag>_reg` action (which creates the register) as `--index-date-range "2019-03-01 to 2022-03-01 by month"`.
 
 ## Worked example
 
