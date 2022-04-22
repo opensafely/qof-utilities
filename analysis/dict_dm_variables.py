@@ -39,15 +39,8 @@ dm_reg_variables = dict(
     dm_list_type_age=patients.satisfying(
         """
         # Diabetes list type age restriction
-        age_dm_reg > 17
-        """,
-        age_dm_reg=patients.age_as_of(
-         "last_day_of_month(index_date) + 1 day",
-         return_expectations={
-             "rate": "universal",
-             "int": {"distribution": "population_ages"},
-         },
-         ),
+        age > 17
+        """
     ),
 
     # Define diabetes register

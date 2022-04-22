@@ -28,11 +28,11 @@ study = StudyDefinition(
         dm_list_type_age
         """,
     ),
-    # Include diabetes variables
-    **dm_reg_variables,
     # Include demographic variables
     **demographic_variables,
-)
+    # Include diabetes variables
+    **dm_reg_variables,
+    )
 
 # Create default measures
 measures = [
