@@ -14,7 +14,7 @@ from codelists_dm import (
 # Patients with an unresolved diagnosis of diabetes
 dm_reg_variables = dict(
 
-    dm_diag=patients.with_these_clinical_events(
+    diabetes_diagnosis=patients.with_these_clinical_events(
         on_or_before="last_day_of_month(index_date)",
         codelist=dm_cod,
         returning="binary_flag",
@@ -35,26 +35,29 @@ dm_reg_variables = dict(
         date_format="YYYY-MM-DD",
     ),
 
-    age_dm_reg=patients.age_as_of(
-         "last_day_of_month(index_date) + 1 day",
-         return_expectations={
-             "rate": "universal",
-             "int": {"distribution": "population_ages"},
-         },
+    # Define patient list type age restriction (17 or older)
+    dm_list_type_age=patients.satisfying(
+        """
+        # Diabetes list type age restriction
+        age > 17
+        """
     ),
 
     # Define diabetes register
-    diabetes=patients.satisfying(
+    diabetes_reg=patients.satisfying(
         """
         # Select patients from the specified population who have a diagnosis
         # of diabetes which has not been subsequently resolved.
-        (dm_diag AND NOT diabetes_resolved 
-        AND age_dm_reg > 17) 
-        
-        OR
-        
-        (diabetes_resolved_date < dm_diag_date
-        AND age_dm_reg > 17)
+        (
+            diabetes_diagnosis AND
+            (NOT diabetes_resolved) AND
+            dm_list_type_age) OR
+
+        (
+            (diabetes_diagnosis AND diabetes_resolved) AND
+            (diabetes_resolved_date <= diabetes_diagnosis_date) AND
+            dm_list_type_age
+        )
         """
     ),
 )

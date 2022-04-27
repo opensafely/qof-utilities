@@ -36,8 +36,8 @@ study = StudyDefinition(
         """,
     ),
     # Include calliative care and demographic variable dictionaries
-    **pc_reg_variables,
     **demographic_variables,
+    **pc_reg_variables,
 )
 
 # Create calliative care register (pc_reg) measures

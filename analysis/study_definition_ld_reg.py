@@ -33,8 +33,8 @@ study = StudyDefinition(
         """,
     ),
     # Include learning disability and demographic variable dictionaries
-    **ld_reg_variables,
     **demographic_variables,
+    **ld_reg_variables,
 )
 
 # Create learning disability register (ld_reg) measures

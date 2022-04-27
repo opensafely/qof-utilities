@@ -20,81 +20,81 @@ study = StudyDefinition(
         """
         # Define general population parameters
         (NOT died) AND
-        
+
         # Define GMS registration status
         gms_reg_status AND
 
-        # Diabetes list size age restriction
-        age > 17
+        # Diabetes list type age restriction
+        dm_list_type_age
         """,
     ),
-    # Include diabetes variables
-    **dm_reg_variables,
     # Include demographic variables
     **demographic_variables,
-)
+    # Include diabetes variables
+    **dm_reg_variables,
+    )
 
 # Create default measures
 measures = [
     Measure(
         id="dm_reg_population_rate",
-        numerator="diabetes",
+        numerator="diabetes_reg",
         denominator="population",
         group_by=["population"],
         small_number_suppression=True,
     ),
     Measure(
         id="dm_reg_practice_rate",
-        numerator="diabetes",
+        numerator="diabetes_reg",
         denominator="population",
         group_by=["practice"],
         small_number_suppression=True,
     ),
     Measure(
         id="dm_reg_age_rate",
-        numerator="diabetes",
+        numerator="diabetes_reg",
         denominator="population",
         group_by=["age_band"],
         small_number_suppression=True,
     ),
     Measure(
         id="dm_reg_sex_rate",
-        numerator="diabetes",
+        numerator="diabetes_reg",
         denominator="population",
         group_by=["sex"],
         small_number_suppression=True,
     ),
     Measure(
         id="dm_reg_imd_rate",
-        numerator="diabetes",
+        numerator="diabetes_reg",
         denominator="population",
         group_by=["imd"],
         small_number_suppression=True,
     ),
     Measure(
         id="dm_reg_region_rate",
-        numerator="diabetes",
+        numerator="diabetes_reg",
         denominator="population",
         group_by=["region"],
         small_number_suppression=True,
     ),
     Measure(
         id="dm_reg_ethnicity_rate",
-        numerator="diabetes",
+        numerator="diabetes_reg",
         denominator="population",
         group_by=["ethnicity"],
         small_number_suppression=True,
     ),
     Measure(
         id="dm_reg_learning_disability_rate",
-        numerator="diabetes",
+        numerator="diabetes_reg",
         denominator="population",
         group_by=["learning_disability"],
         small_number_suppression=True,
     ),
     Measure(
         id="dm_reg_care_home_rate",
-        numerator="diabetes",
+        numerator="diabetes_reg",
         denominator="population",
         group_by=["care_home"],
         small_number_suppression=True,

@@ -33,8 +33,8 @@ study = StudyDefinition(
         """,
     ),
     # Include hypertension and demographic variable dictionaries
-    **hyp_reg_variables,
     **demographic_variables,
+    **hyp_reg_variables,
 )
 
 # Create hypertension register (hyp_reg) measures

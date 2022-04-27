@@ -33,8 +33,8 @@ study = StudyDefinition(
         """,
     ),
     # Include Stroke and TIA and demographic variable dictionaries
-    **stia_reg_variables,
     **demographic_variables,
+    **stia_reg_variables,
 )
 
 # Create Stroke and TIA register (stia_reg) measures

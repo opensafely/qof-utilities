@@ -26,10 +26,10 @@ study = StudyDefinition(
         age >= 6
         """,
     ),
-    # Include asthma variables
-    **ast_reg_variables,
     # Include demographic variables
     **demographic_variables,
+    # Include asthma variables
+    **ast_reg_variables,
 )
 
 # Create default measures
