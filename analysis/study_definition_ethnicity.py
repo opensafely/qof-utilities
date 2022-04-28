@@ -50,10 +50,11 @@ study = StudyDefinition(
                     "Mixed": 0.2,
                     "Asian": 0.2,
                     "Black": 0.2,
-                    "Other": 0.2,
+                    "Other": 0.1,
+                    "Unknown": 0.1,
                 }
             },
-            "incidence": 0.8,
+            "rate": "universal",
         },
     ),
 )
