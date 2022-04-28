@@ -1,9 +1,6 @@
 from cohortextractor import (
     StudyDefinition,
     patients,
-    codelist,
-    codelist_from_csv,
-    Measure,
 )
 
 from config import start_date
@@ -35,7 +32,13 @@ study = StudyDefinition(
             include_date_of_match=False,
             return_expectations={
                 "category": {
-                    "ratios": {"1": 0.2, "2": 0.2, "3": 0.2, "4": 0.2, "5": 0.2}
+                    "ratios": {
+                        "1": 0.2,
+                        "2": 0.2,
+                        "3": 0.2,
+                        "4": 0.2,
+                        "5": 0.2,
+                    }
                 },
                 "incidence": 0.75,
             },
