@@ -1,0 +1,81 @@
+---
+title: "Qoality and Outcomes Framework - Prevalence"
+subtitle: "NHS Financial Year 2020/21"
+output:
+  html_document:
+    number_sections: true
+    code_folding: hide
+---
+
+```{r rmd-setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+```
+```{r}
+
+# Load packages
+library(tidyverse)
+library(here)
+library(janitor)
+library(scales)
+library(reactable)
+```
+
+# Load data
+```{r}
+# Load data
+## Geographies
+df_nhs_geo <- read_csv(here("lib", "prevalence", "MAPPING_NHS_GEOGRAPHIES_2021.csv")) %>% 
+  clean_names() %>% 
+  select(practice_code, region_name)
+
+## Prevalence data for NHS FY 2020/21
+df_qof_prevalence <- read_csv(here("lib", "prevalence", "PREVALENCE_2021_v2.csv")) %>% 
+  clean_names()
+```
+
+# Tidy data
+
+```{r}
+
+df_prevalence_by_region <- df_qof_prevalence %>% 
+  left_join(df_nhs_geo) %>% 
+  group_by(region_name, group_code) %>% 
+  mutate(register = sum(register),
+         list_size = sum(practice_list_size)) %>% 
+  select(group_code, region_name, register, list_size, patient_list_type) %>% 
+  distinct() %>% 
+  ungroup() %>% 
+  mutate(prevalence = register / list_size)
+
+df_prevalence_by_region_table <- df_prevalence_by_region %>% 
+    mutate(patient_list_type_num = str_remove(str_extract(patient_list_type, "\\d+"), "^0+"),
+           patient_list_type_txt = str_extract(patient_list_type, "[:alpha:]+"),
+           patient_list_type_wording = case_when(patient_list_type_txt == "TOTAL" ~ "Total population",
+           patient_list_type_txt == "OV" ~ paste0(patient_list_type_num, " years or over"))) %>% 
+    select(-c(patient_list_type, patient_list_type_num, patient_list_type_txt))
+
+```
+
+# Create table
+```{r}
+
+reactable(df_prevalence_by_region_table,
+          bordered = TRUE,
+          groupBy = "group_code",
+          highlight = TRUE,
+          filterable = TRUE,
+          columns = list(group_code = colDef(name = "Clinical Area"),
+                         region_name = colDef(name = "Region"),
+                         register = colDef(name = "Denominator" ,format = colFormat(digits = 0), aggregate = "sum"),
+                         list_size = colDef(name = "Numerator", format = colFormat(digits = 0), aggregate = "sum"),
+                         prevalence = colDef(name = "Prevalence", format = colFormat(percent = T, digits = 2), aggregate = "mean"),
+                         patient_list_type_wording = colDef(name = "List size type", aggregate = "unique")))
+
+```
+
+# Write data
+
+```{r}
+write_csv(df_prevalence_by_region, here("lib", "prevalence", "qof_prevalence_region_fy20to21.csv"))
+```
