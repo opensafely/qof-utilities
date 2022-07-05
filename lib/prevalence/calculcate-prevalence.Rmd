@@ -39,6 +39,7 @@ df_qof_prevalence <- read_csv(here("lib", "prevalence", "PREVALENCE_2021_v2.csv"
 # Tidy data
 
 ```{r}
+
 df_prevalence_by_region <- df_qof_prevalence %>% 
   left_join(df_nhs_geo) %>% 
   group_by(region_name, group_code) %>% 
@@ -47,29 +48,32 @@ df_prevalence_by_region <- df_qof_prevalence %>%
   select(group_code, region_name, register, list_size, patient_list_type) %>% 
   distinct() %>% 
   ungroup() %>% 
-  mutate(prevalence = register / list_size,
-         prevalence_print = scales::percent(prevalence, accuracy = 0.01))
+  mutate(prevalence = register / list_size)
 
 df_prevalence_by_region_table <- df_prevalence_by_region %>% 
     mutate(patient_list_type_num = str_remove(str_extract(patient_list_type, "\\d+"), "^0+"),
            patient_list_type_txt = str_extract(patient_list_type, "[:alpha:]+"),
            patient_list_type_wording = case_when(patient_list_type_txt == "TOTAL" ~ "Total population",
            patient_list_type_txt == "OV" ~ paste0(patient_list_type_num, " years or over"))) %>% 
-    select(-c(patient_list_type, patient_list_type_num, patient_list_type_txt, prevalence))
+    select(-c(patient_list_type, patient_list_type_num, patient_list_type_txt))
+
 ```
 
 # Create table
 ```{r}
+
 reactable(df_prevalence_by_region_table,
           bordered = TRUE,
+          groupBy = "group_code",
           highlight = TRUE,
           filterable = TRUE,
           columns = list(group_code = colDef(name = "Clinical Area"),
                          region_name = colDef(name = "Region"),
-                         register = colDef(name = "Register"),
-                         list_size = colDef(name = "List size"),
-                         prevalence_print = colDef(name = "Prevalence"),
-                         patient_list_type_wording = colDef(name = "List size type")))
+                         register = colDef(name = "Denominator", aggregate = "sum"),
+                         list_size = colDef(name = "Numerator", aggregate = "sum"),
+                         prevalence = colDef(name = "Prevalence", format = colFormat(percent = T, digits = 2), aggregate = "mean"),
+                         patient_list_type_wording = colDef(name = "List size type", aggregate = "unique")))
+
 ```
 
 # Write data
