@@ -3,8 +3,6 @@ title: "Qoality and Outcomes Framework - Prevalence"
 subtitle: "NHS Financial Year 2020/21"
 output:
   html_document:
-    toc: true
-    toc_float: true
     number_sections: true
     code_folding: hide
 ---
@@ -69,8 +67,8 @@ reactable(df_prevalence_by_region_table,
           filterable = TRUE,
           columns = list(group_code = colDef(name = "Clinical Area"),
                          region_name = colDef(name = "Region"),
-                         register = colDef(name = "Denominator", aggregate = "sum"),
-                         list_size = colDef(name = "Numerator", aggregate = "sum"),
+                         register = colDef(name = "Denominator" ,format = colFormat(digits = 0), aggregate = "sum"),
+                         list_size = colDef(name = "Numerator", format = colFormat(digits = 0), aggregate = "sum"),
                          prevalence = colDef(name = "Prevalence", format = colFormat(percent = T, digits = 2), aggregate = "mean"),
                          patient_list_type_wording = colDef(name = "List size type", aggregate = "unique")))
 
