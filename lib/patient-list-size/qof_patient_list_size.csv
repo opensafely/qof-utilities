@@ -1,0 +1,69 @@
+group_code,indicator_code,patient_list_type,patient_list_type_wording
+AF,AF001,TOTAL,Total population
+AF,AF006,TOTAL,Total population
+AF,AF007,TOTAL,Total population
+AST,AST005,06OV,6 years or over
+AST,AST006,06OV,6 years or over
+AST,AST007,06OV,6 years or over
+AST,AST008,TOTAL,Total population
+BP,BP002,45OV,45 years or over
+CAN,CAN001,TOTAL,Total population
+CAN,CAN003,TOTAL,Total population
+CHD,CHD001,TOTAL,Total population
+CHD,CHD005,TOTAL,Total population
+CHD,CHD007,TOTAL,Total population
+CHD,CHD008,TOTAL,Total population
+CHD,CHD009,TOTAL,Total population
+CKD,CKD005,18OV,18 years or over
+COPD,COPD007,TOTAL,Total population
+COPD,COPD008,TOTAL,Total population
+COPD,COPD009,TOTAL,Total population
+COPD,COPD010,TOTAL,Total population
+CS,CS005,TOTAL,Total population
+CS,CS006,TOTAL,Total population
+DEM,DEM001,TOTAL,Total population
+DEM,DEM004,TOTAL,Total population
+DEP,DEP003,18OV,18 years or over
+DM,DM006,17OV,17 years or over
+DM,DM012,17OV,17 years or over
+DM,DM014,17OV,17 years or over
+DM,DM017,17OV,17 years or over
+DM,DM018,17OV,17 years or over
+DM,DM019,17OV,17 years or over
+DM,DM020,17OV,17 years or over
+DM,DM021,17OV,17 years or over
+DM,DM022,TOTAL,Total population
+DM,DM023,17OV,17 years or over
+EP,EP001,18OV,18 years or over
+HF,HF001,TOTAL,Total population
+HF,HF003,TOTAL,Total population
+HF,HF005,TOTAL,Total population
+HF,HF006,TOTAL,Total population
+HF,HF007,TOTAL,Total population
+HYP,HYP001,TOTAL,Total population
+HYP,HYP003,TOTAL,Total population
+HYP,HYP007,TOTAL,Total population
+LD,LD004,TOTAL,Total population
+MH,MH001,TOTAL,Total population
+MH,MH002,TOTAL,Total population
+MH,MH003,TOTAL,Total population
+MH,MH006,TOTAL,Total population
+NDH,NDH001,18OV,18 years or over
+OB,OB002,18OV,18 years or over
+OST,OST004,50OV,50 years or over
+PAD,PAD001,TOTAL,Total population
+PC,PC001,TOTAL,Total population
+QIECD,QIECD005,TOTAL,Total population
+QIECD,QIECD006,TOTAL,Total population
+QILD,QILD007,TOTAL,Total population
+QILD,QILD008,TOTAL,Total population
+RA,RA001,16OV,16 years or over
+RA,RA002,16OV,16 years or over
+SMOK,SMOK002,15OV,15 years or over
+SMOK,SMOK004,15OV,15 years or over
+SMOK,SMOK005,15OV,15 years or over
+STIA,STIA001,TOTAL,Total population
+STIA,STIA007,TOTAL,Total population
+STIA,STIA009,TOTAL,Total population
+STIA,STIA010,TOTAL,Total population
+STIA,STIA011,TOTAL,Total population
