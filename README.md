@@ -1,7 +1,7 @@
 
 # QOF registers in OpenSAFELY
 
-The purpose of this repository is to provide code which replicates [QOF business rules](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof) for condition registers.
+The purpose of this repository is to provide code which replicates [QOF business rules](https://digital.nhs.uk/data-and-information/data-tools-and-services/data-services/general-practice-data-hub/quality-outcomes-framework-qof) for clinical domain registers.
 This code is intended for researchers to copy and use in their own OpenSAFELY study repositories, and can be used for further analyses on monthly QOF trends and breakdowns by relevant variables. 
 
 This repo also contains [wikis](https://github.com/opensafely/qof-utilities/wiki) with documentation about how we have implemented the QOF business rules.
@@ -20,23 +20,23 @@ This repo currently contains resources for the creation of QOF registers (Versio
 - Palliative Care (PC_REG)
 - Stroke / TIA (STIA_REG)
 
-To create a QOF register in your own OpenSAFELY study you will need to copy from this repo both *specific files for that register* and *shared register files*. Details of both of these types of files can be found below. 
+To create a QOF register in your own OpenSAFELY study you will need to copy from this repo both *specific files needed for that clinical domain* and *shared register files*. Details of both of these types of files can be found below. 
 
-### Specific files needed for each register
+### Specific files needed for each clinical domain
 
-Files specific to a register have a suffix denoting which register they relate to, for example, hypertension register files have the `<condition_tag>` ***hyp*** or ***hyp_reg*** as a suffix. 
-We will use the hypertension register as an example below, for all other registers use the files with the relevant suffix.
+Files specific to a clinical domain have a suffix denoting which clinical domain they relate to, for example, all hypertension specific register files have the `<clinical_domain_tag>` ***hyp*** or ***hyp_reg*** as a suffix. 
+We will use the hypertension register as an example below, for all other clincial domains use the files with the relevant suffix.
 
-- The **register specific codelist** python file needed for the QOF register (e.g., hypertension) is in the [analysis/codelists_hyp.py](analysis/codelists_hyp.py) file.
-- The QOF business rules have been coded into individual variables (such as diagnosis of hypertension) and combined into a register variable (such diagnosis of unresolved hypertension) within a **register specific variable dictionary** (see [OpenSAFELY programming tricks](https://docs.opensafely.org/study-def-tricks/#sharing-common-study-definition-variables)). 
-  You can identify the complete register variable in the dictionary as it is composed by combining the individual variables using the _patients.satisfying()_ function, and has the naming convention `<condition_tag>_reg`. 
+- The **clinical domain specific codelist** python file needed for each QOF clinical domain (e.g., hypertension) is in the [analysis/codelists_hyp.py](analysis/codelists_hyp.py) file.
+- The QOF business rules have been coded into individual variables (such as diagnosis of hypertension) and combined into a register variable (such diagnosis of unresolved hypertension) within a **clinical domain specific variable dictionary** (see [OpenSAFELY programming tricks](https://docs.opensafely.org/study-def-tricks/#sharing-common-study-definition-variables)). 
+  You can identify the complete register variable in the dictionary as it is composed by combining the individual variables using the _patients.satisfying()_ function, and has the naming convention `<clinical_domain_tag>_reg`. 
   The variable dictionary for implementing the hypertension register is here [analysis/dict_hyp_variables.py](analysis/dict_hyp_variables.py). 
-- The **register specific study definition** makes use of the variables defined in the register specific variable dictionary and the demographic dictionary (see below). This file defines the population list size in the _population_ variable, and generates the measures using the register specific register variables. The register specific study definition file is here [analysis/study_definition_hyp_reg.py](analysis/study_definition_hyp_reg.py).
+- The **clinical domain specific study definition** makes use of the variables defined in the clinical domain specific variable dictionary and the demographic dictionary (see below). This file defines the population list size in the _population_ variable, and generates the measures using the clinical domain specific register variables. The clinical domain specific study definition file is here [analysis/study_definition_hyp_reg.py](analysis/study_definition_hyp_reg.py).
 
-### Shared files across all registers
+### Shared files across all clinical domains
 
-- The **demographic and register specific codelist text file** contains all codelists specified in the QOF business rules required for the conditions covered in this repo so far.
-  Note that if you are only working on one register, some codelists in this file may not be relevant for your study and could be deleted, although the study will work without removing irrelevant codelists. 
+- The **demographic and clinical domain specific codelist text file** contains all codelists specified in the QOF business rules required for the clinical domains covered in this repo so far.
+  Note that if you are only working on one clinical domain, some codelists in this file may not be relevant for your study and could be deleted, although the study will work without removing irrelevant codelists. 
   For example, you could remove the hypertension invitation codes if you are only working with the asthma register.
 
 
@@ -52,45 +52,45 @@ We will use the hypertension register as an example below, for all other registe
 
 - Within OpenSAFELY studies ethnicity is usually extracted in a separate study definition and joined later with each QOF register.
   The **ethnicity study definition** can be found here [analysis/study_definition_ethnicity.py](analysis/study_definition_ethnicity.py).
-- The **project.yaml file for all registers** includes actions for all condition specific registers.
+- The **project.yaml file for all clinical domains** includes actions for all clinical domain registers.
 
-  To use this file, you will need to copy across to your study’s *project.yaml* file the actions relating to your specific condition register.The actions associated with all registers are in this file [project.yaml](project.yaml).
+  To use this file, you will need to copy across to your study’s *project.yaml* file the actions relating to your specific clinical domain register.The actions associated with all registers are in this file [project.yaml](project.yaml).
 
-  If you are only working on one clinical area, you do not need to copy over the actions related to the other clinical areas. Actions relating to a specific register can be identified by a suffix with the relevant condition tag.
+  If you are only working on one clinical domain, you do not need to copy over the actions related to the other clinical domain. Actions relating to a specific register can be identified by a suffix with the relevant clinical domain tag.
   
   Note that it is strongly encouraged to use a compressed file format (*.csv.gz* or *.feather*) when running your study on the server. 
   For more details how to change the file format see the OpenSAFELY documentation [here](https://docs.opensafely.org/measures/#calculate-the-measures).
 
 ## How to use this repo
 
-To recreate the QOF register for one of the clinical domains above follow the steps below:
+To recreate the QOF register for one or more of the clinical domains above follow the steps below:
 
 1. Use the [OpenSAFELY research template](https://github.com/opensafely/research-template) to start your own OpenSAFELY QOF project and add it to the wiki [list](https://github.com/opensafely/qof-utilities/wiki) of repos using this code. 
-2. Copy over the relevant register specific files from the [analysis/](analysis/) folder:
-   - The register specific codelist python file
-   - The register specific variable dictionary
-   - The register specific study definition
+2. Copy over the relevant clinical domain specific files from the [analysis/](analysis/) folder:
+   - The clinical domain specific codelist python file
+   - The clinical domain specific variable dictionary
+   - The clinical domain specific study definition
 
 3. Copy over the shared files for all registers (excluding the _project.yaml_ file, this is covered in the step below)
-   - Shared codelist text file. Note that you may not need all of these codelists if you are just working with one register.
+   - Shared codelist text file. Note that you may not need all of these codelists if you are just working with one clinical domain.
    - The demographic and population breakdown codelist python file
    - The demographic and population variable dictionary
    - The ethnicity study definition 
-4. Copy over only the actions relating to your register of interest, from the _project.yaml_ file into the _project.yaml_ file in your research repo. These consist of: 
-   - `generate_study_population_<condition_tag>_reg`
+4. Copy over only the actions relating to your clinical domain of interest, from the _project.yaml_ file into the _project.yaml_ file in your research repo. These consist of: 
+   - `generate_study_population_<clinical_domain_tag>_reg`
    - `generate_study_population_ethnicity`
-   - `join_ethnicity_<condition_tag>`
-   - `generate_measures_<condition_tag>_reg`
+   - `join_ethnicity_<clinical_domain_tag>`
+   - `generate_measures_<clinical_domain_tag>_reg`
 5. If relevant to your analysis, adjust the _config.py_ file and the _project.yaml_ file in your repo to cover the time period and level of return of interest. 
    For analyses looking at trends in register prevalence before and during the pandemic we would recommend a start date of 2019/03/01 and the latest month as the end date.
-   In the _project.yaml_ file, this will be written in the `generate_study_population_<condition_tag>_reg` action (which creates the register) as `--index-date-range "2019-03-01 to 2022-03-01 by month"`.
+   In the _project.yaml_ file, this will be written in the `generate_study_population_<clinical_domain_tag>_reg` action (which creates the register) as `--index-date-range "2019-03-01 to 2022-03-01 by month"`.
 
 ## Worked example
 
-The steps outlined below describe the workflow for one example register, asthma (with the condition tag ***ast***), on how to use the resources in this repository for your study:
+The steps outlined below describe the workflow for one clinical domain, asthma (with the clinical domain tag ***ast***), on show how to use the resources in this repository for your study:
 
 1. Use the [OpenSAFELY research template](https://github.com/opensafely/research-template) to start your own QOF project and add it to the wiki list of repos using this code. 
-2. Copy all asthma register specific
+2. Copy all asthma specific files
      - Asthma specific files:
         - [analysis/codelists_ast.py](analysis/codelists_ast.py)
         - [analysis/dict_ast_variables.py](analysis/dict_ast_variables.py)
@@ -108,11 +108,11 @@ The steps outlined below describe the workflow for one example register, asthma 
      -  _join_ethnicity_ast_reg_: to join ethnicity to the asthma register
      -  _generate_measures_ast_reg_: to generate measures (percentage prevalence for the total population and breakdown by demographic variables)
 
-## Overview of register specific files
+## Overview of clinical domain specific files
 
-The following table shows the condition specific files (available in the [`analysis/`](/analysis) folder) required to create a QOF register.
+The following table shows the clinical domain specific files (available in the [`analysis/`](/analysis) folder) required to create a QOF register.
 
-| Register | Codelists | Variable dictionary | Study definition |
+| Clinical Domain (Register) | Codelists | Variable dictionary | Study definition |
 |:-------- |:--------- |:------------------- |:---------------- |
 | Asthma (AST_REG) | [codelists_ast.py](analysis/codelists_ast.py) | [dict_ast_variables.py](analysis/dict_ast_variables.py) | [study_definition_ast_reg.py](analysis/study_definition_ast_reg.py) |
 | Learning disability (LD_REG) | [codelists_ld.py](analysis/codelists_ld.py) | [dict_ld_variables.py](analysis/dict_ld_variables.py) | [study_definition_ld_reg.py](analysis/study_definition_ld_reg.py) |
